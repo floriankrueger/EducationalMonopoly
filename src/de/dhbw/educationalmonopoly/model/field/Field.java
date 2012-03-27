@@ -5,8 +5,16 @@ import java.awt.Rectangle;
 
 public class Field {
 	
-	private String name;
+	public enum DrawOrientation {
+		NORTH,
+		SOUTH,
+		EAST,
+		WEST
+	}
 	
+	private String name;
+	private DrawOrientation drawOrientation;
+
 	public Field(String name) {
 		this.setName(name);
 	}
@@ -21,6 +29,14 @@ public class Field {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	public DrawOrientation getDrawOrientation() {
+		return drawOrientation;
+	}
+
+	public void setDrawOrientation(DrawOrientation drawOrientation) {
+		this.drawOrientation = drawOrientation;
 	}
 	
 }
