@@ -12,10 +12,15 @@ import de.dhbw.educationalmonopoly.gameRepresentation.IGameRepresentation;
  *
  */
 public class Game {
+	
 	/**
 	 * A reference to a game representation
 	 */
 	public IGameRepresentation gameRepresenation;
+	
+	public Game() {
+		
+	}
 	
 	/**
 	 * Starts the game.
