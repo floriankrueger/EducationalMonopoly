@@ -6,7 +6,7 @@
 package de.dhbw.educationalmonopoly.core;
 
 import de.dhbw.educationalmonopoly.gameRepresentation.IGameRepresentation;
-import de.dhbw.educationalmonopoly.gameRepresentation.SwingGameRepresentation;
+import de.dhbw.educationalmonopoly.gameRepresentation.swingUI.SwingGameRepresentation;
 import de.dhbw.educationalmonopoly.model.Game;
 
 /**
