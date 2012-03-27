@@ -5,6 +5,7 @@ public class TaxField extends Field {
 	private double tax;
 	
 	public TaxField(String name, double tax) {
+		super(name);
 		this.tax = tax;
 	}
 
