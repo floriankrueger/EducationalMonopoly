@@ -6,7 +6,7 @@
 package de.dhbw.educationalmonopoly.core;
 
 import de.dhbw.educationalmonopoly.gameRepresentation.IGameRepresentation;
-import de.dhbw.educationalmonopoly.gameRepresentation.SwingGameRepresentation;
+import de.dhbw.educationalmonopoly.gameRepresentation.swingUI.SwingGameRepresentation;
 import de.dhbw.educationalmonopoly.model.Game;
 import de.dhbw.educationalmonopoly.model.Game.MonopolyType;
 import de.dhbw.educationalmonopoly.model.GameFactory;
@@ -30,7 +30,7 @@ public class Main {
 			System.out.println("Field : " + field.getClass().toString());
 		}
 		
-		//game.start(); 
+		game.start(); 
 	}
 
 }
