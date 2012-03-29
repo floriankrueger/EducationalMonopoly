@@ -22,7 +22,7 @@ public class Game {
 	/**
 	 * A reference to a game representation
 	 */
-	public IGameRepresentation gameRepresenation;
+	private IGameRepresentation gameRepresenation;
 	
 	public Game(MonopolyType monopolyType) {
 		
@@ -41,5 +41,13 @@ public class Game {
 	
 	public void setGameBoard(GameBoard gameBoard) {
 		this.gameBoard = gameBoard;
+	}
+
+	public IGameRepresentation getGameRepresenation() {
+		return gameRepresenation;
+	}
+
+	public void setGameRepresenation(IGameRepresentation gameRepresenation) {
+		this.gameRepresenation = gameRepresenation;
 	}
 }

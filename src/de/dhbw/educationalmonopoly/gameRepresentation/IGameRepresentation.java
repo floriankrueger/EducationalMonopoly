@@ -5,6 +5,8 @@
 */
 package de.dhbw.educationalmonopoly.gameRepresentation;
 
+import de.dhbw.educationalmonopoly.model.GameBoard;
+
 /**
  * @author benjamin
  */
@@ -24,5 +26,10 @@ public interface IGameRepresentation {
 	 * Draws the field in its current state
 	 */
 	public void drawField();
+	
+	/**
+	 * Keeps a reference to the game board which is drawn
+	 */
+	public void setGameBoard(GameBoard gameBoard);
 
 }

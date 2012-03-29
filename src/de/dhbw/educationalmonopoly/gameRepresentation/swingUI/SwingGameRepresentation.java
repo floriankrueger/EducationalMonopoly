@@ -8,6 +8,7 @@ package de.dhbw.educationalmonopoly.gameRepresentation.swingUI;
 import javax.swing.JFrame;
 
 import de.dhbw.educationalmonopoly.gameRepresentation.IGameRepresentation;
+import de.dhbw.educationalmonopoly.model.GameBoard;
 
 
 /**
@@ -16,14 +17,15 @@ import de.dhbw.educationalmonopoly.gameRepresentation.IGameRepresentation;
  */
 public class SwingGameRepresentation implements IGameRepresentation {
 
+	private GameBoard gameBoard;
 	
 	@Override
 	public void initialize() {
 		// TODO Auto-generated method stub
 		
-	}
+	} 
 
-	@Override
+	@Override 
 	public void drawField() {
 		// TODO Auto-generated method stub
 		
@@ -38,6 +40,14 @@ public class SwingGameRepresentation implements IGameRepresentation {
 		
 		GameBoardPanel gamePanel = new GameBoardPanel();
 		mainWindow.add(gamePanel);  
+	}
+
+	public GameBoard getGameBoard() {
+		return gameBoard;
+	}
+
+	public void setGameBoard(GameBoard gameBoard) {
+		this.gameBoard = gameBoard;
 	}
 
 }

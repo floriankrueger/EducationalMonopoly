@@ -24,7 +24,7 @@ public class Main {
 	public static void main(String[] args) {
 		Game game = GameFactory.createGameWithType(MonopolyType.CLASSIC);
 		IGameRepresentation gameRepresentation = new SwingGameRepresentation();
-		game.gameRepresenation = gameRepresentation;
+		game.setGameRepresenation(gameRepresentation);
 		
 		for (Field field : game.getGameBoard().getFields()) {
 			System.out.println("Field : " + field.getClass().toString());
