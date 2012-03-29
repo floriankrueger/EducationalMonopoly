@@ -13,12 +13,18 @@ import de.dhbw.educationalmonopoly.gameRepresentation.IGameRepresentation;
  */
 public class Game {
 	
+	public enum MonopolyType {
+		CLASSIC
+	}
+	
+	private GameBoard gameBoard;
+	
 	/**
 	 * A reference to a game representation
 	 */
 	public IGameRepresentation gameRepresenation;
 	
-	public Game() {
+	public Game(MonopolyType monopolyType) {
 		
 	}
 	
@@ -27,5 +33,13 @@ public class Game {
 	 */
 	public void start() {
 		this.gameRepresenation.presentMenu();
+	}
+	
+	public GameBoard getGameBoard() {
+		return this.gameBoard;
+	}
+	
+	public void setGameBoard(GameBoard gameBoard) {
+		this.gameBoard = gameBoard;
 	}
 }

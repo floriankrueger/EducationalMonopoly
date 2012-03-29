@@ -1,24 +1,40 @@
 package de.dhbw.educationalmonopoly.model.field;
 
-public class SupplyCompanyField extends Field {
+import de.dhbw.educationalmonopoly.model.Player;
 
-	public enum SupplyCompanyType {
-		WATER_WORKS,
-		ELECTRIC_COMPANY
-	}
+public class SupplyCompanyField extends CollectableField implements IBuyable {
 	
-	private SupplyCompanyType type; 
+	private double price;
+	private Player owner;
 	
-	public SupplyCompanyField(String name, SupplyCompanyType type) {
+	public SupplyCompanyField(String name, double price) {
 		super(name);
-		this.setType(type);
+		this.price = price;
 	}
 
-	public SupplyCompanyType getType() {
-		return type;
+	@Override
+	public double getPrice() {
+		return this.price;
 	}
 
-	public void setType(SupplyCompanyType type) {
-		this.type = type;
+	@Override
+	public void setPrice(double price) {
+		this.price = price;
 	}
+	
+	@Override
+	public Player getOwner() {
+		return this.owner;
+	}
+
+	@Override
+	public boolean hasOwner() {
+		return (this.owner != null);
+	}
+
+	@Override
+	public void buy(Player buyer) {
+		// TODO implement purchase process
+	}
+	
 }

@@ -1,0 +1,279 @@
+<?xml version="1.0"?>
+<monopoly>
+	<collections>
+		<!-- STRAßENZUEGE -->
+		<collection name="purpleCollection">
+			<color red="158" green="51" blue="153" />
+		</collection>
+		<collection name="lightBlueCollection">
+			<color red="128" green="204" blue="255" /> 
+		</collection>
+		<collection name="pinkCollection">
+			<color red="204" green="68" blue="204" />
+		</collection>
+		<collection name="orangeCollection">
+			<color red="255" green="128" blue="0" />
+		</collection>
+		<collection name="redCollection">
+			<color red="255" green="0" blue="0" />
+		</collection>
+		<collection name="yellowCollection">
+			<color red="255" green="225" blue="0" />
+		</collection>
+		<collection name="greenCollection">
+			<color red="51" green="128" blue="51" /> 
+		</collection>
+		<collection name="blueCollection">
+			<color red="32" green="32" blue="204" />
+		</collection>
+		
+		<!-- BAHNHOEFE -->
+		<collection name="trainStations" />
+		
+		<!-- VERSORGER -->
+		<collection name="supplyCompanies" />
+	</collections>
+	<fields>
+		<!-- STARTFELD -->
+		<field class="StartField" position="0">
+			<income>200</income>
+		</field>
+		
+		<!-- BADSTRAßE -->
+		<field class="StreetField" position="1">
+			<collection>purpleCollection</collection>
+			<name>Badstraße</name>
+			<price>60</price>
+			<!-- Miete etc. -->
+		</field>
+		
+		<!-- GEMEINSCHAFTSFELD -->
+		<field class="CommunityChestField" position="2" />
+		
+		<!-- TURMSTRAßE -->
+		<field class="StreetField" position="3">
+			<collection>purpleCollection</collection>
+			<name>Turmstraße</name>
+			<price>60</price>
+		</field>
+		
+		<!-- EINKOMMENSTEUER -->
+		<field class="TaxField" position="4">
+			<name>Einkommensteuer</name>
+			<tax>200</tax>
+		</field>
+		
+		<!-- SUEDBAHNHOF -->
+		<field class="TrainStationField" position="5">
+			<collection>trainStations</collection>
+			<name>Südbahnhof</name>
+			<price>200</price>
+		</field>
+		
+		<!-- CHAUSSEESTRAßE -->
+		<field class="StreetField" position="6">
+			<collection>lightBlueCollection</collection>
+			<name>Chausseestraße</name>
+			<price>100</price>
+		</field>
+		
+		<!-- EREIGNISFELD -->
+		<field class="ChanceField" position="7" />
+		
+		<!-- ELISENSTRAßE -->
+		<field class="StreetField" position="8">
+			<collection>lightBlueCollection</collection>
+			<name>Elisenstraße</name>
+			<price>100</price>
+		</field>
+		
+		<!-- POSTSTRAßE -->
+		<field class="StreetField" position="9">
+			<collection>lightBlueCollection</collection>
+			<name>Poststraße</name>
+			<price>120</price>
+		</field>
+		
+		<!-- GEFAENGNIS -->
+		<field class="JailField" position="10" />
+		
+		<!-- SEESTRAßE -->
+		<field class="StreetField" position="11">
+			<collection>pinkCollection</collection>
+			<name>Seestraße</name>
+			<price>140</price>
+		</field>
+		
+		<!-- ELEKTRIZITAETSWERK -->
+		<field class="SupplyCompanyField" position="12">
+			<collection>supplyCompanies</collection>
+			<name>Elektrizitätswerk</name>
+			<price>150</price>
+		</field>
+		
+		<!-- HAFENSTRAßE -->
+		<field class="StreetField" position="13">
+			<collection>pinkCollection</collection>
+			<name>Hafenstraße</name>
+			<price>140</price>
+		</field>
+		
+		<!-- NEUE STRAßE -->
+		<field class="StreetField" position="14">
+			<collection>pinkCollection</collection>
+			<name>Neue Straße</name>
+			<price>160</price>
+		</field>
+		
+		<!-- WESTBAHNHOF -->
+		<field class="TrainStationField" position="15">
+			<collection>trainStations</collection>
+			<name>Westbahnhof</name>
+			<price>200</price>
+		</field>
+		
+		<!-- MUENCHENER STRAßE -->
+		<field class="StreetField" position="16">
+			<collection>orangeCollection</collection>
+			<name>Münchener Straße</name>
+			<price>180</price>
+		</field>
+		
+		<!-- GEMEINSCHAFTSFELD -->
+		<field class="CommunityChestField" position="17" />
+		
+		<!-- WIENER STRAßE -->
+		<field class="StreetField" position="18">
+			<collection>orangeCollection</collection>
+			<name>Wiener Straße</name>
+			<price>180</price>
+		</field>
+		
+		<!-- BERLINER STRAßE -->
+		<field class="StreetField" position="19">
+			<collection>orangeCollection</collection>
+			<name>Berliner Straße</name>
+			<price>200</price>
+		</field>
+		
+		<!-- FREI PARKEN -->
+		<field class="FreeParkingField" position="20" />
+		
+		<!-- THEATERSTRAßE -->
+		<field class="StreetField" position="21">
+			<collection>redCollection</collection>
+			<name>Theaterstraße</name>
+			<price>220</price>
+		</field>
+		
+		<!-- EREIGNISFELD -->
+		<field class="ChanceField" position="22" />
+		
+		<!-- MUSEUMSSTRAßE -->
+		<field class="StreetField" position="23">
+			<collection>redCollection</collection>
+			<name>Museumsstraße</name>
+			<price>220</price>
+		</field>
+		
+		<!-- OPERNPLATZ -->
+		<field class="StreetField" position="24">
+			<collection>redCollection</collection>
+			<name>Opernplatz</name>
+			<price>240</price>
+		</field>
+		
+		<!-- NORDBAHNHOF -->
+		<field class="TrainStationField" position="25">
+			<collection>trainStations</collection>
+			<name>Nordbahnhof</name>
+			<price>200</price>
+		</field>
+		
+		<!-- LESSINGSTRAßE -->
+		<field class="StreetField" position="26">
+			<collection>yellowCollection</collection>
+			<name>Lessingstraße</name>
+			<price>260</price>
+		</field>
+		
+		<!-- SCHILLERSTRAßE -->
+		<field class="StreetField" position="27">
+			<collection>yellowCollection</collection>
+			<name>Schillerstraße</name>
+			<price>260</price>
+		</field>
+		
+		<!-- WASSERWERK -->
+		<field class="SupplyCompanyField" position="28">
+			<collection>supplyCompanies</collection>
+			<name>Wasserwerk</name>
+			<price>150</price>
+		</field>
+		
+		<!-- GOETHESTRAßE -->
+		<field class="StreetField" position="29">
+			<collection>yellowCollection</collection>
+			<name>Goethestraße</name>
+			<price>280</price>
+		</field>
+		
+		<!-- GEHE IN DAS GEFAENGNIS -->
+		<field class="GoToJailField" position="30" />
+		
+		<!-- RATHAUSPLATZ -->
+		<field class="StreetField" position="31">
+			<collection>greenCollection</collection>
+			<name>Rathausplatz</name>
+			<price>300</price>
+		</field>
+		
+		<!-- HAUPTSTRAßE -->
+		<field class="StreetField" position="32">
+			<collection>greenCollection</collection>
+			<name>Hauptstraße</name>
+			<price>300</price>
+		</field>
+		
+		<!-- GEMEINSCHAFTSFELD -->
+		<field class="CommunityChestField" position="33" />
+		
+		<!-- BAHNHOFSTRAßE -->
+		<field class="StreetField" position="34">
+			<collection>greenCollection</collection>
+			<name>Bahnhofstraße</name>
+			<price>320</price>
+		</field>
+		
+		<!-- HAUPTBAHNHOF -->
+		<field class="TrainStationField" position="35">
+			<collection>trainStations</collection>
+			<name>Hauptbahnhof</name>
+			<price>200</price>
+		</field>
+		
+		<!-- EREIGNISFELD -->
+		<field class="ChanceField" position="36" />
+		
+		<!-- PARKSTRAßE -->
+		<field class="StreetField" position="37">
+			<collection>blueCollection</collection>
+			<name>Parkstraße</name>
+			<price>350</price>
+		</field>
+		
+		<!-- ZUSATZSTEUER -->
+		<field class="TaxField" position="38">
+			<name>Zusatzsteuer</name>
+			<tax>200</tax>
+		</field>
+		
+		<!-- SCHLOSSALLEE -->
+		<field class="StreetField" position="39">
+			<collection>blueCollection</collection>
+			<name>Schlossallee</name>
+			<price>400</price>
+		</field>
+		
+	</fields>
+</monopoly>
