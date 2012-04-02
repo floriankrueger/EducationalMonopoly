@@ -14,11 +14,13 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Insets;
+import java.awt.Rectangle;
 import java.util.List;
 
 import javax.swing.JPanel;
 
 import de.dhbw.educationalmonopoly.model.field.Field;
+import de.dhbw.educationalmonopoly.model.field.StreetField;
 
 /**
  * @author benjamin
@@ -42,7 +44,6 @@ public class GameBoardPanel extends JPanel {
 	      int w =  size.width - insets.left - insets.right;
 	      int h =  size.height - insets.top - insets.bottom;
 	      
-	      System.out.println(this.fields.size());
 	      int fields = this.fields.size();
 	      
 	      if ((fields % 4) != 0) {
@@ -69,41 +70,55 @@ public class GameBoardPanel extends JPanel {
 	private void drawGameField(Graphics2D g2d, int rowLength, int currentX,
 			int currentY, int fieldWidth, int fieldHeight) {
 		
+		  // initialize
+		  int fieldIndex = 0;
+		
 		  // draw first row starting at the bottom right
-	      g2d.fillRect(currentX, currentY, fieldWidth, fieldHeight);
-          currentX -= fieldWidth;
-
-	      for (int i=1; i<rowLength-1; i++) {
-	          g2d.drawRect(currentX, currentY, fieldWidth, fieldHeight);
-	          currentX -= fieldWidth;
+	      for (int i=0; i<rowLength; i++) {
+	    	  Rectangle rect = new Rectangle(currentX, currentY, fieldWidth, fieldHeight);
+	    	  Field currentField = this.fields.get(fieldIndex);
+	    	  this.drawField(currentField, g2d, rect);
+	    	  currentX -= fieldWidth;
+	          fieldIndex++;
 	      } 
 	      
 	      // draw second row moving upwards
-	      g2d.fillRect(currentX, currentY, fieldWidth, fieldHeight);
-          currentY -= fieldHeight;	    	  
-
-	      for (int i=1; i<rowLength-1; i++) {
-	          g2d.drawRect(currentX, currentY, fieldWidth, fieldHeight);
-	          currentY -= fieldHeight;	    	  
+	      for (int i=0; i<rowLength; i++) {
+	    	  Rectangle rect = new Rectangle(currentX, currentY, fieldWidth, fieldHeight);
+	    	  Field currentField = this.fields.get(fieldIndex);
+	    	  this.drawField(currentField, g2d, rect);
+	    	  currentY -= fieldHeight;
+	          fieldIndex++;    	  
 	      }
 	      
 	      // draw third row moving right
-	      g2d.fillRect(currentX, currentY, fieldWidth, fieldHeight);
-          currentX += fieldWidth;	    	  
-	      
-	      for (int i=1; i<rowLength-1; i++) {
-	          g2d.drawRect(currentX, currentY, fieldWidth, fieldHeight);
-	          currentX += fieldWidth;	    	  
+	      for (int i=0; i<rowLength; i++) {
+	    	  Rectangle rect = new Rectangle(currentX, currentY, fieldWidth, fieldHeight);
+	    	  Field currentField = this.fields.get(fieldIndex);
+	    	  this.drawField(currentField, g2d, rect);
+	    	  currentX += fieldWidth;
+	          fieldIndex++;   	    	  
 	      }
 	      
 	      // draw fourth row moving downwards
-	      g2d.fillRect(currentX, currentY, fieldWidth, fieldHeight);
-          currentY += fieldHeight;
-	      
-	      for (int i=1; i<rowLength-1; i++) {
-	          g2d.drawRect(currentX, currentY, fieldWidth, fieldHeight);
-	          currentY += fieldHeight;
+      
+	      for (int i=0; i<rowLength; i++) {
+	    	  Rectangle rect = new Rectangle(currentX, currentY, fieldWidth, fieldHeight);
+	    	  Field currentField = this.fields.get(fieldIndex);
+	    	  this.drawField(currentField, g2d, rect);
+	    	  currentY += fieldHeight;
+	          fieldIndex++; 
 	      }
+	}
+	
+	private void drawField(final Field field, final Graphics2D g2d, Rectangle rect) {
+		if (field instanceof StreetField) {
+			g2d.setColor( ((StreetField)field).getColor() );
+			System.out.println("");
+			g2d.fillRect(rect.x, rect.y, rect.width, rect.height);
+		} else {
+			g2d.drawRect(rect.x, rect.y, rect.width, rect.height); 
+		}
 	}
 
 

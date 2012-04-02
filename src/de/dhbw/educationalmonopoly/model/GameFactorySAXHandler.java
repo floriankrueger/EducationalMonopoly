@@ -188,6 +188,7 @@ public class GameFactorySAXHandler extends DefaultHandler {
 					
 					if (null != fieldCollection) {
 						fieldCollection.addField((CollectableField)currentField);
+						((CollectableField)currentField).setFieldCollection(fieldCollection);
 					}
 				}
 				
