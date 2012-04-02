@@ -49,5 +49,6 @@ public class Game {
 
 	public void setGameRepresenation(IGameRepresentation gameRepresenation) {
 		this.gameRepresenation = gameRepresenation;
+		this.gameRepresenation.setGameBoard(this.gameBoard);
 	}
 }

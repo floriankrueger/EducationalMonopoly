@@ -69,7 +69,7 @@
 			<name>Südbahnhof</name>
 			<price>200</price>
 		</field>
-		
+		currentFieldData
 		<!-- CHAUSSEESTRAßE -->
 		<field class="StreetField" position="6">
 			<collection>lightBlueCollection</collection>

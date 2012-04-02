@@ -39,6 +39,8 @@ public class SwingGameRepresentation implements IGameRepresentation {
 		mainWindow.setTitle("Educational Monopoly");
 		
 		GameBoardPanel gamePanel = new GameBoardPanel();
+		gamePanel.setFields(this.gameBoard.getFields()); 
+		
 		mainWindow.add(gamePanel);  
 	}
 

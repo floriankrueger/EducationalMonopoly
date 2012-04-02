@@ -20,6 +20,7 @@ import de.dhbw.educationalmonopoly.model.field.StartField;
 import de.dhbw.educationalmonopoly.model.field.StreetField;
 import de.dhbw.educationalmonopoly.model.field.SupplyCompanyField;
 import de.dhbw.educationalmonopoly.model.field.TaxField;
+import de.dhbw.educationalmonopoly.model.field.TrainStationField;
 
 public class GameFactorySAXHandler extends DefaultHandler {
 	
@@ -133,13 +134,20 @@ public class GameFactorySAXHandler extends DefaultHandler {
 				currentField = new FreeParkingField();
 			}
 			
+			// TrainStationField
+			else if (className.equalsIgnoreCase("TrainStationField")) {
+				String name = currentFieldData.get("name");
+				int price = Integer.parseInt(currentFieldData.get("price"));
+				currentField = new TrainStationField(name,TrainStationField.TrainStationType.SOUTH,price);
+			}
+			
 			// GoToJailField
 			else if (className.equalsIgnoreCase("GoToJailField")) {
 				currentField = new GoToJailField();
 			}
 			
 			// JailField
-			else if (className.equalsIgnoreCase("GoToJailField")) {
+			else if (className.equalsIgnoreCase("JailField")) {
 				currentField = new JailField();
 			}
 			

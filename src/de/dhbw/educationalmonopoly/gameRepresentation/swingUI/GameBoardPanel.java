@@ -14,7 +14,8 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Insets;
-import java.util.ArrayList;
+import java.util.List;
+
 import javax.swing.JPanel;
 
 import de.dhbw.educationalmonopoly.model.field.Field;
@@ -25,7 +26,7 @@ import de.dhbw.educationalmonopoly.model.field.Field;
  */
 public class GameBoardPanel extends JPanel {
 
-	private ArrayList<Field> fields;
+	private List<Field> fields;
 	private static final long serialVersionUID = 1L;
 
 	public void paintComponent(Graphics g) throws RuntimeException {
@@ -41,8 +42,8 @@ public class GameBoardPanel extends JPanel {
 	      int w =  size.width - insets.left - insets.right;
 	      int h =  size.height - insets.top - insets.bottom;
 	      
-	      //int fields = this.fields.size();
-	      int fields = 44;
+	      System.out.println(this.fields.size());
+	      int fields = this.fields.size();
 	      
 	      if ((fields % 4) != 0) {
 		    	try {
@@ -103,5 +104,15 @@ public class GameBoardPanel extends JPanel {
 	          g2d.drawRect(currentX, currentY, fieldWidth, fieldHeight);
 	          currentY += fieldHeight;
 	      }
+	}
+
+
+	public List<Field> getFields() {
+		return fields;
+	}
+
+
+	public void setFields(List<Field> fields) {
+		this.fields = fields;
 	} 
 }
