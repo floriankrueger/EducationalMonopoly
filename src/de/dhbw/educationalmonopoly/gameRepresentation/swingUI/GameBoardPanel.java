@@ -76,6 +76,7 @@ public class GameBoardPanel extends JPanel {
 		  // draw first row starting at the bottom right
     	  Rectangle rect = new Rectangle(currentX, currentY, fieldHeight, fieldHeight);
     	  Field currentField = this.fields.get(fieldIndex);
+    	  currentField.setDrawOrientation(Field.DrawOrientation.NORTH);
     	  this.drawField(currentField, g2d, rect);
     	  currentX -= fieldWidth;
           fieldIndex++;
@@ -83,6 +84,7 @@ public class GameBoardPanel extends JPanel {
 	      for (int i=1; i<rowLength; i++) {
 	    	  rect = new Rectangle(currentX, currentY, fieldWidth, fieldHeight);
 	    	  currentField = this.fields.get(fieldIndex);
+	    	  currentField.setDrawOrientation(Field.DrawOrientation.NORTH);
 	    	  this.drawField(currentField, g2d, rect);
 	    	  currentX -= fieldWidth;
 	          fieldIndex++;
@@ -94,6 +96,7 @@ public class GameBoardPanel extends JPanel {
 	      // draw second row moving upwards
     	  rect = new Rectangle(currentX, currentY, fieldHeight, fieldHeight);
     	  currentField = this.fields.get(fieldIndex);
+    	  currentField.setDrawOrientation(Field.DrawOrientation.EAST);
     	  this.drawField(currentField, g2d, rect);
     	  currentY -= fieldWidth;
           fieldIndex++;
@@ -101,6 +104,7 @@ public class GameBoardPanel extends JPanel {
 	      for (int i=1; i<rowLength; i++) {
 	    	  rect = new Rectangle(currentX, currentY,fieldHeight, fieldWidth);
 	    	  currentField = this.fields.get(fieldIndex);
+	    	  currentField.setDrawOrientation(Field.DrawOrientation.EAST);
 	    	  this.drawField(currentField, g2d, rect);
 	    	  currentY -= fieldWidth;
 	          fieldIndex++;    	  
@@ -112,6 +116,7 @@ public class GameBoardPanel extends JPanel {
 	      // draw third row moving right
     	  rect = new Rectangle(currentX, currentY, fieldHeight, fieldHeight);
     	  currentField = this.fields.get(fieldIndex);
+    	  currentField.setDrawOrientation(Field.DrawOrientation.SOUTH);
     	  this.drawField(currentField, g2d, rect);
     	  currentX += fieldHeight;
           fieldIndex++;   
@@ -119,6 +124,7 @@ public class GameBoardPanel extends JPanel {
 	      for (int i=1; i<rowLength; i++) {
 	    	  rect = new Rectangle(currentX, currentY, fieldWidth, fieldHeight);
 	    	  currentField = this.fields.get(fieldIndex);
+	    	  currentField.setDrawOrientation(Field.DrawOrientation.SOUTH);
 	    	  this.drawField(currentField, g2d, rect);
 	    	  currentX += fieldWidth;
 	          fieldIndex++;   	    	  
@@ -127,6 +133,7 @@ public class GameBoardPanel extends JPanel {
 	      // draw fourth row moving downwards
     	  rect = new Rectangle(currentX, currentY, fieldHeight, fieldHeight);
     	  currentField = this.fields.get(fieldIndex);
+    	  currentField.setDrawOrientation(Field.DrawOrientation.WEST);
     	  this.drawField(currentField, g2d, rect);
     	  currentY += fieldHeight;
           fieldIndex++; 
@@ -134,6 +141,7 @@ public class GameBoardPanel extends JPanel {
 	      for (int i=1; i<rowLength; i++) {
 	    	  rect = new Rectangle(currentX, currentY, fieldHeight, fieldWidth);
 	    	  currentField = this.fields.get(fieldIndex);
+	    	  currentField.setDrawOrientation(Field.DrawOrientation.WEST);
 	    	  this.drawField(currentField, g2d, rect);
 	    	  currentY += fieldWidth;
 	          fieldIndex++; 
@@ -148,8 +156,29 @@ public class GameBoardPanel extends JPanel {
 		// draw content
 		if (field instanceof StreetField) {
 			g2d.setColor( ((StreetField)field).getColor() );
-			System.out.println("");
-			g2d.fillRect(rect.x, rect.y, rect.width, rect.height);
+			Rectangle fillRect = rect;
+			
+			switch (field.getDrawOrientation()) {
+				case NORTH:
+					fillRect.height = (int) (0.3*rect.height);
+					break;
+					
+				case EAST:
+					fillRect.x += (int) (0.7*rect.width);
+					fillRect.width = (int) (0.3*rect.width);
+					break;
+					
+				case SOUTH:
+					fillRect.y += (int) (0.7*rect.height);
+					fillRect.height = (int) (0.3*rect.height);
+					break;
+				
+				case WEST:
+					fillRect.width = (int) (0.3*rect.width);
+					break;		
+			}
+			
+			g2d.fillRect(fillRect.x, fillRect.y, fillRect.width, fillRect.height);
 		}
 	}
 
