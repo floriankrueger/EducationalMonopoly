@@ -60,7 +60,7 @@ public class GameBoardPanel extends JPanel {
 	      int currentX = w-100;
 	      int currentY = h-100;
 	      int fieldWidth = 60;
-	      int fieldHeight = 60;
+	      int fieldHeight = 80;
 	      
 	      drawGameField(g2d, rowLength, currentX, currentY, fieldWidth,
 				fieldHeight);
@@ -74,50 +74,82 @@ public class GameBoardPanel extends JPanel {
 		  int fieldIndex = 0;
 		
 		  // draw first row starting at the bottom right
-	      for (int i=0; i<rowLength; i++) {
-	    	  Rectangle rect = new Rectangle(currentX, currentY, fieldWidth, fieldHeight);
-	    	  Field currentField = this.fields.get(fieldIndex);
+    	  Rectangle rect = new Rectangle(currentX, currentY, fieldHeight, fieldHeight);
+    	  Field currentField = this.fields.get(fieldIndex);
+    	  this.drawField(currentField, g2d, rect);
+    	  currentX -= fieldWidth;
+          fieldIndex++;
+		  
+	      for (int i=1; i<rowLength; i++) {
+	    	  rect = new Rectangle(currentX, currentY, fieldWidth, fieldHeight);
+	    	  currentField = this.fields.get(fieldIndex);
 	    	  this.drawField(currentField, g2d, rect);
 	    	  currentX -= fieldWidth;
 	          fieldIndex++;
 	      } 
 	      
+	      // increase distance for corner field
+	      currentX -= (fieldHeight-fieldWidth);
+	      
 	      // draw second row moving upwards
-	      for (int i=0; i<rowLength; i++) {
-	    	  Rectangle rect = new Rectangle(currentX, currentY, fieldWidth, fieldHeight);
-	    	  Field currentField = this.fields.get(fieldIndex);
+    	  rect = new Rectangle(currentX, currentY, fieldHeight, fieldHeight);
+    	  currentField = this.fields.get(fieldIndex);
+    	  this.drawField(currentField, g2d, rect);
+    	  currentY -= fieldWidth;
+          fieldIndex++;
+	      
+	      for (int i=1; i<rowLength; i++) {
+	    	  rect = new Rectangle(currentX, currentY,fieldHeight, fieldWidth);
+	    	  currentField = this.fields.get(fieldIndex);
 	    	  this.drawField(currentField, g2d, rect);
-	    	  currentY -= fieldHeight;
+	    	  currentY -= fieldWidth;
 	          fieldIndex++;    	  
 	      }
 	      
+	      // increase distance for corner field
+	      currentY -= (fieldHeight-fieldWidth);
+	      
 	      // draw third row moving right
-	      for (int i=0; i<rowLength; i++) {
-	    	  Rectangle rect = new Rectangle(currentX, currentY, fieldWidth, fieldHeight);
-	    	  Field currentField = this.fields.get(fieldIndex);
+    	  rect = new Rectangle(currentX, currentY, fieldHeight, fieldHeight);
+    	  currentField = this.fields.get(fieldIndex);
+    	  this.drawField(currentField, g2d, rect);
+    	  currentX += fieldHeight;
+          fieldIndex++;   
+	      
+	      for (int i=1; i<rowLength; i++) {
+	    	  rect = new Rectangle(currentX, currentY, fieldWidth, fieldHeight);
+	    	  currentField = this.fields.get(fieldIndex);
 	    	  this.drawField(currentField, g2d, rect);
 	    	  currentX += fieldWidth;
 	          fieldIndex++;   	    	  
 	      }
-	      
+	      	      
 	      // draw fourth row moving downwards
-      
-	      for (int i=0; i<rowLength; i++) {
-	    	  Rectangle rect = new Rectangle(currentX, currentY, fieldWidth, fieldHeight);
-	    	  Field currentField = this.fields.get(fieldIndex);
+    	  rect = new Rectangle(currentX, currentY, fieldHeight, fieldHeight);
+    	  currentField = this.fields.get(fieldIndex);
+    	  this.drawField(currentField, g2d, rect);
+    	  currentY += fieldHeight;
+          fieldIndex++; 
+	      
+	      for (int i=1; i<rowLength; i++) {
+	    	  rect = new Rectangle(currentX, currentY, fieldHeight, fieldWidth);
+	    	  currentField = this.fields.get(fieldIndex);
 	    	  this.drawField(currentField, g2d, rect);
-	    	  currentY += fieldHeight;
+	    	  currentY += fieldWidth;
 	          fieldIndex++; 
 	      }
 	}
 	
 	private void drawField(final Field field, final Graphics2D g2d, Rectangle rect) {
+		// draw border
+		g2d.setColor(new Color(0,0,0));
+		g2d.drawRect(rect.x, rect.y, rect.width, rect.height); 
+		
+		// draw content
 		if (field instanceof StreetField) {
 			g2d.setColor( ((StreetField)field).getColor() );
 			System.out.println("");
 			g2d.fillRect(rect.x, rect.y, rect.width, rect.height);
-		} else {
-			g2d.drawRect(rect.x, rect.y, rect.width, rect.height); 
 		}
 	}
 
