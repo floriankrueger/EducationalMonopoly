@@ -15,6 +15,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Insets;
 import java.awt.Rectangle;
+import java.awt.geom.AffineTransform;
 import java.util.List;
 
 import javax.swing.JPanel;
@@ -157,10 +158,48 @@ public class GameBoardPanel extends JPanel {
 		
 		// draw content
 		if (field instanceof StreetField) {
-			drawStreetField(field, g2d, rect);
+			this.drawStreetField(field, g2d, rect);
+		} else {
+			this.drawStationField(field, g2d, rect);
 		}
 	}
 
+	private void drawStationField(final Field field, final Graphics2D g2d,
+			Rectangle rect) {
+		Rectangle drawRect = rect;
+		
+		AffineTransform at = new AffineTransform();
+		
+		// choose stripe position depending on field orientation
+		switch (field.getDrawOrientation()) {
+			case NORTH:
+				break;
+				
+			case EAST:
+				drawRect.x += (int) ( (1-this.stripeThickness)*rect.width);
+				at.setToRotation(+Math.PI/2.0);
+				break;
+				
+			case SOUTH:
+				drawRect.y += (int) ( (1-this.stripeThickness)*rect.height);
+				at.setToRotation(-Math.PI);
+				break;
+			
+			case WEST:
+				at.setToRotation(-Math.PI/2.0);
+				break;		
+		}
+		
+		 // Get the current transform
+		 AffineTransform saveAT = g2d.getTransform();
+		 // Perform transformation
+		 g2d.translate(rect.x, rect.y);
+		 g2d.transform(at);
+		 // Render
+		 g2d.drawString(field.getName(), 0, 0);
+		 // Restore original transform
+		 g2d.setTransform(saveAT);
+	}
 
 	private void drawStreetField(final Field field, final Graphics2D g2d,
 			Rectangle rect) {
