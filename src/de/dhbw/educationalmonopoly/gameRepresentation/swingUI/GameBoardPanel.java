@@ -28,6 +28,8 @@ import de.dhbw.educationalmonopoly.model.field.StreetField;
  */
 public class GameBoardPanel extends JPanel {
 
+	// thickness of color stripe in percent of the field height
+	private final float stripeThickness = 0.3f;
 	private List<Field> fields;
 	private static final long serialVersionUID = 1L;
 
@@ -155,31 +157,38 @@ public class GameBoardPanel extends JPanel {
 		
 		// draw content
 		if (field instanceof StreetField) {
-			g2d.setColor( ((StreetField)field).getColor() );
-			Rectangle fillRect = rect;
-			
-			switch (field.getDrawOrientation()) {
-				case NORTH:
-					fillRect.height = (int) (0.3*rect.height);
-					break;
-					
-				case EAST:
-					fillRect.x += (int) (0.7*rect.width);
-					fillRect.width = (int) (0.3*rect.width);
-					break;
-					
-				case SOUTH:
-					fillRect.y += (int) (0.7*rect.height);
-					fillRect.height = (int) (0.3*rect.height);
-					break;
-				
-				case WEST:
-					fillRect.width = (int) (0.3*rect.width);
-					break;		
-			}
-			
-			g2d.fillRect(fillRect.x, fillRect.y, fillRect.width, fillRect.height);
+			drawStreetField(field, g2d, rect);
 		}
+	}
+
+
+	private void drawStreetField(final Field field, final Graphics2D g2d,
+			Rectangle rect) {
+		g2d.setColor( ((StreetField)field).getColor() );
+		Rectangle fillRect = rect;
+		
+		// choose stripe position depending on field orientation
+		switch (field.getDrawOrientation()) {
+			case NORTH:
+				fillRect.height = (int) (this.stripeThickness*rect.height);
+				break;
+				
+			case EAST:
+				fillRect.x += (int) ( (1-this.stripeThickness)*rect.width);
+				fillRect.width = (int) (this.stripeThickness*rect.width);
+				break;
+				
+			case SOUTH:
+				fillRect.y += (int) ( (1-this.stripeThickness)*rect.height);
+				fillRect.height = (int) (this.stripeThickness*rect.height);
+				break;
+			
+			case WEST:
+				fillRect.width = (int) (this.stripeThickness*rect.width);
+				break;		
+		}
+		
+		g2d.fillRect(fillRect.x, fillRect.y, fillRect.width, fillRect.height);
 	}
 
 
