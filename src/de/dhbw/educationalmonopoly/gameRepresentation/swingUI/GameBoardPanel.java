@@ -16,10 +16,10 @@ import java.awt.Graphics2D;
 import java.awt.Insets;
 import java.awt.Rectangle;
 import java.awt.geom.AffineTransform;
-import java.util.List;
 
 import javax.swing.JPanel;
 
+import de.dhbw.educationalmonopoly.model.GameBoard;
 import de.dhbw.educationalmonopoly.model.field.Field;
 import de.dhbw.educationalmonopoly.model.field.StreetField;
 
@@ -31,7 +31,9 @@ public class GameBoardPanel extends JPanel {
 
 	// thickness of color stripe in percent of the field height
 	private final float stripeThickness = 0.3f;
-	private List<Field> fields;
+	// reference to the game board drawn
+	private GameBoard gameBoard;
+	
 	private static final long serialVersionUID = 1L;
 
 	public void paintComponent(Graphics g) {
@@ -47,7 +49,7 @@ public class GameBoardPanel extends JPanel {
 	      int w =  size.width - insets.left - insets.right;
 	      int h =  size.height - insets.top - insets.bottom;
 	      
-	      int fields = this.fields.size();
+	      int fields = this.gameBoard.getFields().size();
 	      
 	      if ((fields % 4) != 0) {
 		    	try {
@@ -78,7 +80,7 @@ public class GameBoardPanel extends JPanel {
 		
 		  // draw first row starting at the bottom right
     	  Rectangle rect = new Rectangle(currentX, currentY, fieldHeight, fieldHeight);
-    	  Field currentField = this.fields.get(fieldIndex);
+    	  Field currentField = this.gameBoard.getFields().get(fieldIndex);
     	  currentField.setDrawOrientation(Field.DrawOrientation.NORTH);
     	  this.drawField(currentField, g2d, rect);
     	  currentX -= fieldWidth;
@@ -86,7 +88,7 @@ public class GameBoardPanel extends JPanel {
 		  
 	      for (int i=1; i<rowLength; i++) {
 	    	  rect = new Rectangle(currentX, currentY, fieldWidth, fieldHeight);
-	    	  currentField = this.fields.get(fieldIndex);
+	    	  currentField = this.gameBoard.getFields().get(fieldIndex);
 	    	  currentField.setDrawOrientation(Field.DrawOrientation.NORTH);
 	    	  this.drawField(currentField, g2d, rect);
 	    	  currentX -= fieldWidth;
@@ -98,7 +100,7 @@ public class GameBoardPanel extends JPanel {
 	      
 	      // draw second row moving upwards
     	  rect = new Rectangle(currentX, currentY, fieldHeight, fieldHeight);
-    	  currentField = this.fields.get(fieldIndex);
+    	  currentField = this.gameBoard.getFields().get(fieldIndex);
     	  currentField.setDrawOrientation(Field.DrawOrientation.EAST);
     	  this.drawField(currentField, g2d, rect);
     	  currentY -= fieldWidth;
@@ -106,7 +108,7 @@ public class GameBoardPanel extends JPanel {
 	      
 	      for (int i=1; i<rowLength; i++) {
 	    	  rect = new Rectangle(currentX, currentY,fieldHeight, fieldWidth);
-	    	  currentField = this.fields.get(fieldIndex);
+	    	  currentField = this.gameBoard.getFields().get(fieldIndex);
 	    	  currentField.setDrawOrientation(Field.DrawOrientation.EAST);
 	    	  this.drawField(currentField, g2d, rect);
 	    	  currentY -= fieldWidth;
@@ -118,7 +120,7 @@ public class GameBoardPanel extends JPanel {
 	      
 	      // draw third row moving right
     	  rect = new Rectangle(currentX, currentY, fieldHeight, fieldHeight);
-    	  currentField = this.fields.get(fieldIndex);
+    	  currentField = this.gameBoard.getFields().get(fieldIndex);
     	  currentField.setDrawOrientation(Field.DrawOrientation.SOUTH);
     	  this.drawField(currentField, g2d, rect);
     	  currentX += fieldHeight;
@@ -126,7 +128,7 @@ public class GameBoardPanel extends JPanel {
 	      
 	      for (int i=1; i<rowLength; i++) {
 	    	  rect = new Rectangle(currentX, currentY, fieldWidth, fieldHeight);
-	    	  currentField = this.fields.get(fieldIndex);
+	    	  currentField = this.gameBoard.getFields().get(fieldIndex);
 	    	  currentField.setDrawOrientation(Field.DrawOrientation.SOUTH);
 	    	  this.drawField(currentField, g2d, rect);
 	    	  currentX += fieldWidth;
@@ -135,7 +137,7 @@ public class GameBoardPanel extends JPanel {
 	      	      
 	      // draw fourth row moving downwards
     	  rect = new Rectangle(currentX, currentY, fieldHeight, fieldHeight);
-    	  currentField = this.fields.get(fieldIndex);
+    	  currentField = this.gameBoard.getFields().get(fieldIndex);
     	  currentField.setDrawOrientation(Field.DrawOrientation.WEST);
     	  this.drawField(currentField, g2d, rect);
     	  currentY += fieldHeight;
@@ -143,7 +145,7 @@ public class GameBoardPanel extends JPanel {
 	      
 	      for (int i=1; i<rowLength; i++) {
 	    	  rect = new Rectangle(currentX, currentY, fieldHeight, fieldWidth);
-	    	  currentField = this.fields.get(fieldIndex);
+	    	  currentField = this.gameBoard.getFields().get(fieldIndex);
 	    	  currentField.setDrawOrientation(Field.DrawOrientation.WEST);
 	    	  this.drawField(currentField, g2d, rect);
 	    	  currentY += fieldWidth;
@@ -231,12 +233,13 @@ public class GameBoardPanel extends JPanel {
 	}
 
 
-	public List<Field> getFields() {
-		return fields;
+	public GameBoard getGameBoard() {
+		return gameBoard;
 	}
 
 
-	public void setFields(List<Field> fields) {
-		this.fields = fields;
-	} 
+	public void setGameBoard(GameBoard gameBoard) {
+		this.gameBoard = gameBoard;
+	}
+	
 }
