@@ -19,6 +19,7 @@ import java.awt.geom.AffineTransform;
 
 import javax.swing.JPanel;
 
+import de.dhbw.educationalmonopoly.model.Game;
 import de.dhbw.educationalmonopoly.model.GameBoard;
 import de.dhbw.educationalmonopoly.model.field.Field;
 import de.dhbw.educationalmonopoly.model.field.StreetField;
@@ -31,10 +32,15 @@ public class GameBoardPanel extends JPanel {
 
 	// thickness of color stripe in percent of the field height
 	private final float stripeThickness = 0.3f;
+
+	// reference to the game drawn
+	private Game game;
+	
 	// reference to the game board drawn
 	private GameBoard gameBoard;
 	
 	private static final long serialVersionUID = 1L;
+	
 
 	public void paintComponent(Graphics g) {
 	      super.paintComponent(g);
@@ -232,14 +238,16 @@ public class GameBoardPanel extends JPanel {
 		g2d.fillRect(fillRect.x, fillRect.y, fillRect.width, fillRect.height);
 	}
 
-
-	public GameBoard getGameBoard() {
-		return gameBoard;
+	public Game getGame() {
+		return game;
 	}
 
 
-	public void setGameBoard(GameBoard gameBoard) {
-		this.gameBoard = gameBoard;
+	public void setGame(Game game) {
+		this.game = game;
+		
+		// store shortcut reference
+		this.gameBoard = game.getGameBoard();
 	}
 	
 }

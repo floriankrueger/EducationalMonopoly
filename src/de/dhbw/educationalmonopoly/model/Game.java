@@ -32,7 +32,7 @@ public class Game {
 	 * Starts the game.
 	 */
 	public void start() {
-		this.gameRepresenation.presentMenu();
+		this.gameRepresenation.drawField();
 	}
 	
 	public GameBoard getGameBoard() {
@@ -49,6 +49,6 @@ public class Game {
 
 	public void setGameRepresenation(IGameRepresentation gameRepresenation) {
 		this.gameRepresenation = gameRepresenation;
-		this.gameRepresenation.setGameBoard(this.gameBoard);
+		this.gameRepresenation.setGame(this);
 	}
 }

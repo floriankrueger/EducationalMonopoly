@@ -8,8 +8,7 @@ package de.dhbw.educationalmonopoly.gameRepresentation.swingUI;
 import javax.swing.JFrame;
 
 import de.dhbw.educationalmonopoly.gameRepresentation.IGameRepresentation;
-import de.dhbw.educationalmonopoly.model.GameBoard;
-
+import de.dhbw.educationalmonopoly.model.Game;
 
 /**
  * @author benjamin
@@ -17,20 +16,18 @@ import de.dhbw.educationalmonopoly.model.GameBoard;
  */
 public class SwingGameRepresentation implements IGameRepresentation {
 
-	private GameBoard gameBoard;
+	private Game game;
 	private JFrame mainWindow;
 	private GameBoardPanel gameBoardPanel;
 	
-	@Override
-	public void initialize() {
+	{
 		this.mainWindow = new JFrame();
 		mainWindow.setSize(1024,768);
 		mainWindow.setVisible(true); 
 		mainWindow.setTitle("Educational Monopoly");
 		
 		this.gameBoardPanel = new GameBoardPanel();
-		gameBoardPanel.setGameBoard(this.gameBoard); 
-		
+				
 		mainWindow.add(gameBoardPanel);  		
 	} 
 
@@ -44,12 +41,10 @@ public class SwingGameRepresentation implements IGameRepresentation {
 
 	}
 
-	public GameBoard getGameBoard() {
-		return gameBoard;
-	}
-
-	public void setGameBoard(GameBoard gameBoard) {
-		this.gameBoard = gameBoard;
+	@Override
+	public void setGame(Game game) {
+		this.game = game;
+		gameBoardPanel.setGame(this.game); 
 	}
 
 }
