@@ -34,7 +34,7 @@ public class GameBoardPanel extends JPanel {
 	private List<Field> fields;
 	private static final long serialVersionUID = 1L;
 
-	public void paintComponent(Graphics g) throws RuntimeException {
+	public void paintComponent(Graphics g) {
 	      super.paintComponent(g);
 
 	      Graphics2D g2d = (Graphics2D) g;
