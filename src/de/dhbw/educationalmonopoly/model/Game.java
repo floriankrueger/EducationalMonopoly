@@ -5,6 +5,8 @@
 */
 package de.dhbw.educationalmonopoly.model;
 
+import java.util.List;
+
 import de.dhbw.educationalmonopoly.gameRepresentation.IGameRepresentation;
 
 /**
@@ -18,6 +20,7 @@ public class Game {
 	}
 	
 	private GameBoard gameBoard;
+	private List<Player> players;
 	
 	/**
 	 * A reference to a game representation
@@ -50,5 +53,17 @@ public class Game {
 	public void setGameRepresenation(IGameRepresentation gameRepresenation) {
 		this.gameRepresenation = gameRepresenation;
 		this.gameRepresenation.setGame(this);
+	}
+	
+	public void addPlayer(Player player) {
+		this.players.add(player);
+	}
+
+	public List<Player> getPlayers() {
+		return players;
+	}
+
+	public void setPlayers(List<Player> players) {
+		this.players = players;
 	}
 }

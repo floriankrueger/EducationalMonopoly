@@ -10,6 +10,7 @@ import de.dhbw.educationalmonopoly.gameRepresentation.swingUI.SwingGameRepresent
 import de.dhbw.educationalmonopoly.model.Game;
 import de.dhbw.educationalmonopoly.model.Game.MonopolyType;
 import de.dhbw.educationalmonopoly.model.GameFactory;
+import de.dhbw.educationalmonopoly.model.Player;
 
 /**
  * @author fkrueger
@@ -24,6 +25,11 @@ public class Main {
 		Game game = GameFactory.createGameWithType(MonopolyType.CLASSIC);
 		IGameRepresentation gameRepresentation = new SwingGameRepresentation();
 		game.setGameRepresenation(gameRepresentation);
+		
+		Player player1 = new Player();
+		Player player2 = new Player();
+		game.addPlayer(player1);
+		game.addPlayer(player2);
 		
 		game.start(); 
 	}

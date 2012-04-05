@@ -21,6 +21,8 @@ import javax.swing.JPanel;
 
 import de.dhbw.educationalmonopoly.model.Game;
 import de.dhbw.educationalmonopoly.model.GameBoard;
+import de.dhbw.educationalmonopoly.model.Player;
+import de.dhbw.educationalmonopoly.model.Token;
 import de.dhbw.educationalmonopoly.model.field.Field;
 import de.dhbw.educationalmonopoly.model.field.StreetField;
 
@@ -73,10 +75,18 @@ public class GameBoardPanel extends JPanel {
 	      int fieldWidth = 60;
 	      int fieldHeight = 80;
 	      
-	      drawGameField(g2d, rowLength, currentX, currentY, fieldWidth,
+	      this.drawGameField(g2d, rowLength, currentX, currentY, fieldWidth,
 				fieldHeight);
+	      
+	      this.drawTokens(g2d);
 	  }
 
+	private void drawTokens(Graphics2D g2d) {
+		for (Player p: this.game.getPlayers()) {
+			Token token = p.getToken();
+			//TODO: implement token drawing
+		}
+	}
 	
 	private void drawGameField(Graphics2D g2d, int rowLength, int currentX,
 			int currentY, int fieldWidth, int fieldHeight) {
