@@ -5,6 +5,7 @@
 */
 package de.dhbw.educationalmonopoly.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import de.dhbw.educationalmonopoly.gameRepresentation.IGameRepresentation;
@@ -26,6 +27,10 @@ public class Game {
 	 * A reference to a game representation
 	 */
 	private IGameRepresentation gameRepresenation;
+	
+	{
+		this.players = new ArrayList<Player>();
+	}
 	
 	public Game(MonopolyType monopolyType) {
 		
