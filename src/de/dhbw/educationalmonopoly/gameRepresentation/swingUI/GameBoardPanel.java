@@ -105,7 +105,6 @@ public class GameBoardPanel extends JPanel {
 			}
 		}
 		
-		//TODO: implement token drawing
 		for (Field currentField : fieldTokenMap.keySet()) {
 			List<Token> tokenList = fieldTokenMap.get(currentField);
 			int amountOfTokensOnField = tokenList.size();
@@ -113,7 +112,12 @@ public class GameBoardPanel extends JPanel {
 			if (amountOfTokensOnField == 1) {
 				// we only have on token, draw it centered
 				Rectangle drawRect = currentField.getDrawingRectangle();
+		     	AffineTransform oldTransform = g2d.getTransform();
+		     	g2d.setTransform(currentField.getTransform());
+		     		
 				g2d.drawOval((int) (drawRect.x+(0.5*drawRect.width)), (int) (drawRect.y+(0.5*drawRect.height)), 10, 10);
+				
+				g2d.setTransform(oldTransform);
 			} else {
 				int i = 0;
 				for (Token token: tokenList) {
@@ -144,6 +148,7 @@ public class GameBoardPanel extends JPanel {
 			     	
 			     	g2d.setTransform(currentField.getTransform());
 					 
+			     	//TODO: let token draw itself
 					g2d.drawOval(newDrawRect.x, newDrawRect.y , 10, 10);
 					
 					g2d.setTransform(oldTransform);
@@ -210,39 +215,15 @@ public class GameBoardPanel extends JPanel {
 
 	private void drawStationField(final Field field, final Graphics2D g2d,
 			Rectangle rect) {
-		Rectangle drawRect = rect;
-		
-		AffineTransform at = new AffineTransform();
-		
-		// choose stripe position depending on field orientation
-		switch (field.getDrawOrientation()) {
-			case NORTH:
-				break;
-				
-			case EAST:
-				drawRect.x += (int) ( (1-this.stripeThickness)*rect.width);
-				at.setToRotation(+Math.PI/2.0);
-				break;
-				
-			case SOUTH:
-				drawRect.y += (int) ( (1-this.stripeThickness)*rect.height);
-				at.setToRotation(-Math.PI);
-				break;
-			
-			case WEST:
-				at.setToRotation(-Math.PI/2.0);
-				break;		
-		}
 		
 		 // Get the current transform
 		 AffineTransform saveAT = g2d.getTransform();
-		 // Perform transformation
-		 g2d.translate(rect.x, rect.y);
-		 g2d.transform(at);
+		 // Perform transformation);
+		 g2d.setTransform(field.getTransform());
 		 // Render
 		 Font font = new Font("Arial", Font.PLAIN, 12);   
 		 g2d.setFont(font);
-		 g2d.drawString(field.getName(), 0, 0);
+		 g2d.drawString(field.getName(), rect.x, rect.y);
 		 // Restore original transform
 		 g2d.setTransform(saveAT);
 	}
@@ -252,9 +233,9 @@ public class GameBoardPanel extends JPanel {
 		g2d.setColor( ((StreetField)field).getColor() );
 		Rectangle fillRect = rect;
 		
-		// choose stripe position depending on field orientation
 		fillRect.height = (int) (this.stripeThickness*rect.height);
 		
+		// set transform to field's local coordinates syste
 		AffineTransform oldTransform = g2d.getTransform();
 		g2d.setTransform(field.getTransform());
 		
