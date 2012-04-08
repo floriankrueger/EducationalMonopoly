@@ -16,6 +16,9 @@ import java.awt.Graphics2D;
 import java.awt.Insets;
 import java.awt.Rectangle;
 import java.awt.geom.AffineTransform;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 import javax.swing.JPanel;
 
@@ -78,14 +81,71 @@ public class GameBoardPanel extends JPanel {
 	      this.drawGameField(g2d, rowLength, currentX, currentY, fieldWidth,
 				fieldHeight);
 	      
-	      //this.drawTokens(g2d);
+	      this.drawTokens(g2d);
 	  }
 
 	private void drawTokens(Graphics2D g2d) {
+		// stores a list of all tokens placed on a field
+		HashMap<Field, List<Token> > fieldTokenMap = new HashMap<Field, List<Token> >();
+		
+		// in the first step sort all tokens by fields
 		for (Player p: this.game.getPlayers()) {
 			Token token = p.getToken();
-			//TODO: implement token drawing
+			int fieldIndex = token.getFieldIndex();
+			Field field = this.gameBoard.getFields().get(fieldIndex);
+			List<Token> tokenList = fieldTokenMap.get(field);
+					
+			if (tokenList != null) {
+				tokenList.add(token);
+			} else {
+				List<Token> newTokenList = new ArrayList<Token>();
+				newTokenList.add(token);
+				fieldTokenMap.put(field,newTokenList);
+			}
 		}
+		
+		//TODO: implement token drawing
+		for (Field currentField : fieldTokenMap.keySet()) {
+			List<Token> tokenList = fieldTokenMap.get(currentField);
+			int amountOfTokensOnField = tokenList.size();
+			
+			if (amountOfTokensOnField == 1) {
+				// we only have on token, draw it centered
+				Rectangle drawRect = currentField.getDrawingRectangle();
+				g2d.drawOval((int) (drawRect.x+(0.5*drawRect.width)), (int) (drawRect.y+(0.5*drawRect.height)), 10, 10);
+			} else {
+				int i = 0;
+				for (Token token: tokenList) {
+	
+					Rectangle newDrawRect = new Rectangle();
+					
+					int right 	= currentField.getDrawingRectangle().x + currentField.getDrawingRectangle().width;
+					int left 	= currentField.getDrawingRectangle().x;
+					int bottom 	= currentField.getDrawingRectangle().y + currentField.getDrawingRectangle().height;
+					int top 	= currentField.getDrawingRectangle().y; 
+					
+					 switch (i) {
+					 	case 0:  newDrawRect.x = right;
+					 			 newDrawRect.y = top;
+					 	 		 break;
+			            case 1:  newDrawRect.x = right;
+			 			 		 newDrawRect.y = bottom;
+			                     break;
+			            case 2:  newDrawRect.x = left;
+			 			 	     newDrawRect.y = bottom;
+			                     break;
+			            case 3:  newDrawRect.x = left;
+			 			 		 newDrawRect.y = top;
+			 			 		 break;
+					 }
+					 
+					g2d.drawOval(newDrawRect.x, newDrawRect.y , 10, 10);
+
+					i++;
+				}
+			}	
+		}
+
 	}
 	
 	private void drawGameField(Graphics2D g2d, int rowLength, int currentX,
@@ -172,6 +232,7 @@ public class GameBoardPanel extends JPanel {
 	private void drawField(final Field field, final Graphics2D g2d, Rectangle rect) {
 		// draw border
 		g2d.setColor(new Color(0,0,0));
+		field.setDrawingRectangle(rect);
 		g2d.drawRect(rect.x, rect.y, rect.width, rect.height); 
 		
 		// draw content

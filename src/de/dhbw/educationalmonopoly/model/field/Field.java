@@ -14,6 +14,8 @@ public class Field {
 	
 	private String name;
 	private DrawOrientation drawOrientation;
+	// if needed this member stores the drawing position of the field
+	private Rectangle drawingRectangle;
 
 	public Field(String name) {
 		this.setName(name);
@@ -37,6 +39,14 @@ public class Field {
 
 	public void setDrawOrientation(DrawOrientation drawOrientation) {
 		this.drawOrientation = drawOrientation;
+	}
+
+	public Rectangle getDrawingRectangle() {
+		return drawingRectangle;
+	}
+
+	public void setDrawingRectangle(Rectangle drawingRectangle) {
+		this.drawingRectangle = drawingRectangle;
 	}
 	
 }
