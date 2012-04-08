@@ -28,7 +28,8 @@ public class Main {
 		
 		Player player1 = new Player();
 		Player player2 = new Player();
-		player2.getToken().setFieldIndex(5);
+		player1.getToken().setFieldIndex(0);
+		player2.getToken().setFieldIndex(0);
 		game.addPlayer(player1);
 		game.addPlayer(player2);
 		

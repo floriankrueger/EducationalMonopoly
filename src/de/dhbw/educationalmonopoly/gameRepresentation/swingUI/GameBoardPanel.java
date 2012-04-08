@@ -11,6 +11,7 @@ package de.dhbw.educationalmonopoly.gameRepresentation.swingUI;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Insets;
@@ -73,8 +74,8 @@ public class GameBoardPanel extends JPanel {
 	      int rowLength = fields / 4;
 
 	      // setup initial positions
-	      int currentX = w-100;
-	      int currentY = h-100;
+	      int currentX = w-300;
+	      int currentY = h-90;
 	      int fieldWidth = 60;
 	      int fieldHeight = 80;
 	      
@@ -124,7 +125,7 @@ public class GameBoardPanel extends JPanel {
 					int bottom 	= currentField.getDrawingRectangle().y + currentField.getDrawingRectangle().height;
 					int top 	= currentField.getDrawingRectangle().y; 
 					
-					 switch (i) {
+			     	 switch (i) {
 					 	case 0:  newDrawRect.x = right;
 					 			 newDrawRect.y = top;
 					 	 		 break;
@@ -138,8 +139,14 @@ public class GameBoardPanel extends JPanel {
 			 			 		 newDrawRect.y = top;
 			 			 		 break;
 					 }
+			     	 
+			     	AffineTransform oldTransform = g2d.getTransform();
+			     	
+			     	g2d.setTransform(currentField.getTransform());
 					 
 					g2d.drawOval(newDrawRect.x, newDrawRect.y , 10, 10);
+					
+					g2d.setTransform(oldTransform);
 
 					i++;
 				}
@@ -155,78 +162,36 @@ public class GameBoardPanel extends JPanel {
 		  int fieldIndex = 0;
 		
 		  // draw first row starting at the bottom right
-    	  Rectangle rect = new Rectangle(currentX, currentY, fieldHeight, fieldHeight);
-    	  Field currentField = this.gameBoard.getFields().get(fieldIndex);
-    	  currentField.setDrawOrientation(Field.DrawOrientation.NORTH);
-    	  this.drawField(currentField, g2d, rect);
-    	  currentX -= fieldWidth;
-          fieldIndex++;
 		  
-	      for (int i=1; i<rowLength; i++) {
-	    	  rect = new Rectangle(currentX, currentY, fieldWidth, fieldHeight);
-	    	  currentField = this.gameBoard.getFields().get(fieldIndex);
+		  for (int j = 0; j < 4; j++) {
+	    	  Rectangle rect = new Rectangle(currentX, currentY, fieldHeight, fieldHeight);
+	    	  Field currentField = this.gameBoard.getFields().get(fieldIndex);
 	    	  currentField.setDrawOrientation(Field.DrawOrientation.NORTH);
+	    	  currentField.setTransform(g2d.getTransform());
+	    	  
 	    	  this.drawField(currentField, g2d, rect);
 	    	  currentX -= fieldWidth;
 	          fieldIndex++;
-	      } 
-	      
-	      // increase distance for corner field
-	      currentX -= (fieldHeight-fieldWidth);
-	      
-	      // draw second row moving upwards
-    	  rect = new Rectangle(currentX, currentY, fieldHeight, fieldHeight);
-    	  currentField = this.gameBoard.getFields().get(fieldIndex);
-    	  currentField.setDrawOrientation(Field.DrawOrientation.EAST);
-    	  this.drawField(currentField, g2d, rect);
-    	  currentY -= fieldWidth;
-          fieldIndex++;
-	      
-	      for (int i=1; i<rowLength; i++) {
-	    	  rect = new Rectangle(currentX, currentY,fieldHeight, fieldWidth);
-	    	  currentField = this.gameBoard.getFields().get(fieldIndex);
-	    	  currentField.setDrawOrientation(Field.DrawOrientation.EAST);
-	    	  this.drawField(currentField, g2d, rect);
-	    	  currentY -= fieldWidth;
-	          fieldIndex++;    	  
-	      }
-	      
-	      // increase distance for corner field
-	      currentY -= (fieldHeight-fieldWidth);
-	      
-	      // draw third row moving right
-    	  rect = new Rectangle(currentX, currentY, fieldHeight, fieldHeight);
-    	  currentField = this.gameBoard.getFields().get(fieldIndex);
-    	  currentField.setDrawOrientation(Field.DrawOrientation.SOUTH);
-    	  this.drawField(currentField, g2d, rect);
-    	  currentX += fieldHeight;
-          fieldIndex++;   
-	      
-	      for (int i=1; i<rowLength; i++) {
-	    	  rect = new Rectangle(currentX, currentY, fieldWidth, fieldHeight);
-	    	  currentField = this.gameBoard.getFields().get(fieldIndex);
-	    	  currentField.setDrawOrientation(Field.DrawOrientation.SOUTH);
-	    	  this.drawField(currentField, g2d, rect);
-	    	  currentX += fieldWidth;
-	          fieldIndex++;   	    	  
-	      }
-	      	      
-	      // draw fourth row moving downwards
-    	  rect = new Rectangle(currentX, currentY, fieldHeight, fieldHeight);
-    	  currentField = this.gameBoard.getFields().get(fieldIndex);
-    	  currentField.setDrawOrientation(Field.DrawOrientation.WEST);
-    	  this.drawField(currentField, g2d, rect);
-    	  currentY += fieldHeight;
-          fieldIndex++; 
-	      
-	      for (int i=1; i<rowLength; i++) {
-	    	  rect = new Rectangle(currentX, currentY, fieldHeight, fieldWidth);
-	    	  currentField = this.gameBoard.getFields().get(fieldIndex);
-	    	  currentField.setDrawOrientation(Field.DrawOrientation.WEST);
-	    	  this.drawField(currentField, g2d, rect);
-	    	  currentY += fieldWidth;
-	          fieldIndex++; 
-	      }
+			  
+		      for (int i=1; i<rowLength; i++) {
+		    	  rect = new Rectangle(currentX, currentY, fieldWidth, fieldHeight);
+		    	  currentField = this.gameBoard.getFields().get(fieldIndex);
+		    	  currentField.setDrawOrientation(Field.DrawOrientation.NORTH);
+		    	  currentField.setTransform(g2d.getTransform());
+		    	  this.drawField(currentField, g2d, rect);
+		    	  currentX -= fieldWidth;
+		          fieldIndex++;
+		      } 
+		      
+		      // increase distance for corner field
+		      currentX = 0;
+		      currentY = 0;
+		      
+		      AffineTransform at = new AffineTransform();
+		      at.setToRotation(Math.PI/2.0);
+		      g2d.translate(currentField.getDrawingRectangle().x, currentField.getDrawingRectangle().y);
+		      g2d.transform(at);
+		  }
 	}
 	
 	private void drawField(final Field field, final Graphics2D g2d, Rectangle rect) {
@@ -275,6 +240,8 @@ public class GameBoardPanel extends JPanel {
 		 g2d.translate(rect.x, rect.y);
 		 g2d.transform(at);
 		 // Render
+		 Font font = new Font("Arial", Font.PLAIN, 12);   
+		 g2d.setFont(font);
 		 g2d.drawString(field.getName(), 0, 0);
 		 // Restore original transform
 		 g2d.setTransform(saveAT);
@@ -286,27 +253,14 @@ public class GameBoardPanel extends JPanel {
 		Rectangle fillRect = rect;
 		
 		// choose stripe position depending on field orientation
-		switch (field.getDrawOrientation()) {
-			case NORTH:
-				fillRect.height = (int) (this.stripeThickness*rect.height);
-				break;
-				
-			case EAST:
-				fillRect.x += (int) ( (1-this.stripeThickness)*rect.width);
-				fillRect.width = (int) (this.stripeThickness*rect.width);
-				break;
-				
-			case SOUTH:
-				fillRect.y += (int) ( (1-this.stripeThickness)*rect.height);
-				fillRect.height = (int) (this.stripeThickness*rect.height);
-				break;
-			
-			case WEST:
-				fillRect.width = (int) (this.stripeThickness*rect.width);
-				break;		
-		}
+		fillRect.height = (int) (this.stripeThickness*rect.height);
+		
+		AffineTransform oldTransform = g2d.getTransform();
+		g2d.setTransform(field.getTransform());
 		
 		g2d.fillRect(fillRect.x, fillRect.y, fillRect.width, fillRect.height);
+		
+		g2d.setTransform(oldTransform);
 	}
 
 	public Game getGame() {
