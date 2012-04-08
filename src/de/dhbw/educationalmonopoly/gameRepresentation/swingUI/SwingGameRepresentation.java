@@ -5,6 +5,8 @@
 */
 package de.dhbw.educationalmonopoly.gameRepresentation.swingUI;
 
+import java.awt.Color;
+
 import javax.swing.JFrame;
 
 import de.dhbw.educationalmonopoly.gameRepresentation.IGameRepresentation;
@@ -19,6 +21,7 @@ public class SwingGameRepresentation implements IGameRepresentation {
 	private Game game;
 	private JFrame mainWindow;
 	private GameBoardPanel gameBoardPanel;
+	private PlayerActionPanel playerActionPanel;
 	
 	{
 		this.mainWindow = new JFrame();
@@ -27,8 +30,18 @@ public class SwingGameRepresentation implements IGameRepresentation {
 		mainWindow.setTitle("Educational Monopoly");
 		
 		this.gameBoardPanel = new GameBoardPanel();
+		this.gameBoardPanel.setSize(800,768);
 				
-		mainWindow.add(gameBoardPanel);  		
+		mainWindow.add(this.gameBoardPanel);  
+		
+		this.playerActionPanel = new PlayerActionPanel();
+
+		this.playerActionPanel.setSize(200, 768);
+		//this.playerActionPanel.revalidate();
+		//this.playerActionPanel.repaint();
+		this.playerActionPanel.setBackground(new Color(255,0,0));
+		mainWindow.add(this.playerActionPanel);
+
 	} 
 
 	@Override 

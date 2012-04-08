@@ -74,10 +74,14 @@ public class GameBoardPanel extends JPanel {
 	      int rowLength = fields / 4;
 
 	      // setup initial positions
-	      int currentX = w-300;
-	      int currentY = h-90;
 	      int fieldWidth = 60;
 	      int fieldHeight = 80;
+	      
+	      int currentX = w - fieldHeight - 40;
+	      int currentY = h - fieldHeight - 50;
+	      
+	      //TODO: remove me once positioning works
+	      //DEBUG: g2d.fillRect(0, 0, 100, 100);
 	      
 	      this.drawGameField(g2d, rowLength, currentX, currentY, fieldWidth,
 				fieldHeight);
@@ -85,80 +89,6 @@ public class GameBoardPanel extends JPanel {
 	      this.drawTokens(g2d);
 	  }
 
-	private void drawTokens(Graphics2D g2d) {
-		// stores a list of all tokens placed on a field
-		HashMap<Field, List<Token> > fieldTokenMap = new HashMap<Field, List<Token> >();
-		
-		// in the first step sort all tokens by fields
-		for (Player p: this.game.getPlayers()) {
-			Token token = p.getToken();
-			int fieldIndex = token.getFieldIndex();
-			Field field = this.gameBoard.getFields().get(fieldIndex);
-			List<Token> tokenList = fieldTokenMap.get(field);
-					
-			if (tokenList != null) {
-				tokenList.add(token);
-			} else {
-				List<Token> newTokenList = new ArrayList<Token>();
-				newTokenList.add(token);
-				fieldTokenMap.put(field,newTokenList);
-			}
-		}
-		
-		for (Field currentField : fieldTokenMap.keySet()) {
-			List<Token> tokenList = fieldTokenMap.get(currentField);
-			int amountOfTokensOnField = tokenList.size();
-			
-			if (amountOfTokensOnField == 1) {
-				// we only have on token, draw it centered
-				Rectangle drawRect = currentField.getDrawingRectangle();
-		     	AffineTransform oldTransform = g2d.getTransform();
-		     	g2d.setTransform(currentField.getTransform());
-		     		
-				g2d.drawOval((int) (drawRect.x+(0.5*drawRect.width)), (int) (drawRect.y+(0.5*drawRect.height)), 10, 10);
-				
-				g2d.setTransform(oldTransform);
-			} else {
-				int i = 0;
-				for (Token token: tokenList) {
-	
-					Rectangle newDrawRect = new Rectangle();
-					
-					int right 	= currentField.getDrawingRectangle().x + currentField.getDrawingRectangle().width;
-					int left 	= currentField.getDrawingRectangle().x;
-					int bottom 	= currentField.getDrawingRectangle().y + currentField.getDrawingRectangle().height;
-					int top 	= currentField.getDrawingRectangle().y; 
-					
-			     	 switch (i) {
-					 	case 0:  newDrawRect.x = right;
-					 			 newDrawRect.y = top;
-					 	 		 break;
-			            case 1:  newDrawRect.x = right;
-			 			 		 newDrawRect.y = bottom;
-			                     break;
-			            case 2:  newDrawRect.x = left;
-			 			 	     newDrawRect.y = bottom;
-			                     break;
-			            case 3:  newDrawRect.x = left;
-			 			 		 newDrawRect.y = top;
-			 			 		 break;
-					 }
-			     	 
-			     	AffineTransform oldTransform = g2d.getTransform();
-			     	
-			     	g2d.setTransform(currentField.getTransform());
-					 
-			     	//TODO: let token draw itself
-					g2d.drawOval(newDrawRect.x, newDrawRect.y , 10, 10);
-					
-					g2d.setTransform(oldTransform);
-
-					i++;
-				}
-			}	
-		}
-
-	}
 	
 	private void drawGameField(Graphics2D g2d, int rowLength, int currentX,
 			int currentY, int fieldWidth, int fieldHeight) {
@@ -229,8 +159,10 @@ public class GameBoardPanel extends JPanel {
 	}
 
 	private void drawStreetField(final Field field, final Graphics2D g2d,
-			Rectangle rect) {
+			final Rectangle rect) {
 		g2d.setColor( ((StreetField)field).getColor() );
+		
+		// we need to clone the rect, since we don't want to transform it
 		Rectangle fillRect = (Rectangle) rect.clone();
 		
 		fillRect.height = (int) (this.stripeThickness*rect.height);
@@ -244,6 +176,84 @@ public class GameBoardPanel extends JPanel {
 		g2d.setTransform(oldTransform);
 	}
 
+	private void drawTokens(Graphics2D g2d) {
+		// stores a list of all tokens placed on a field
+		HashMap<Field, List<Token> > fieldTokenMap = new HashMap<Field, List<Token> >();
+		
+		// in the first step group all tokens by fields
+		for (Player p: this.game.getPlayers()) {
+			Token token = p.getToken();
+			int fieldIndex = token.getFieldIndex();
+			Field field = this.gameBoard.getFields().get(fieldIndex);
+			List<Token> tokenList = fieldTokenMap.get(field);
+					
+			if (tokenList != null) {
+				tokenList.add(token);
+			} else {
+				List<Token> newTokenList = new ArrayList<Token>();
+				newTokenList.add(token);
+				fieldTokenMap.put(field,newTokenList);
+			}
+		}
+		
+		// iterate over all fields containing tokens
+		for (Field currentField : fieldTokenMap.keySet()) {
+			List<Token> tokenList = fieldTokenMap.get(currentField);
+			int amountOfTokensOnField = tokenList.size();
+			
+			if (amountOfTokensOnField == 1) {
+				// we only have on token, draw it centered
+				Rectangle drawRect = currentField.getDrawingRectangle();
+		     	AffineTransform oldTransform = g2d.getTransform();
+		     	g2d.setTransform(currentField.getTransform());
+		     		
+				g2d.drawOval((int) (drawRect.x+(0.5*drawRect.width)), (int) (drawRect.y+(0.5*drawRect.height)), 10, 10);
+				
+				g2d.setTransform(oldTransform);
+			} else {
+				// we have multiple tokens, draw tokens at edge positions
+				int i = 0;
+				for (Token token: tokenList) {
+	
+					Rectangle newDrawRect = new Rectangle();
+					
+					int right 	= currentField.getDrawingRectangle().x + currentField.getDrawingRectangle().width;
+					int left 	= currentField.getDrawingRectangle().x;
+					int bottom 	= currentField.getDrawingRectangle().y + currentField.getDrawingRectangle().height;
+					int top 	= currentField.getDrawingRectangle().y; 
+					
+			     	 switch (i) {
+					 	case 0:  newDrawRect.x = right;
+					 			 newDrawRect.y = top;
+					 	 		 break;
+			            case 1:  newDrawRect.x = right;
+			 			 		 newDrawRect.y = bottom;
+			                     break;
+			            case 2:  newDrawRect.x = left;
+			 			 	     newDrawRect.y = bottom;
+			                     break;
+			            case 3:  newDrawRect.x = left;
+			 			 		 newDrawRect.y = top;
+			 			 		 break;
+					 }
+			     	 
+			     	AffineTransform oldTransform = g2d.getTransform();
+			     	
+			     	g2d.setTransform(currentField.getTransform());
+					 
+			     	//TODO: let token draw itself
+
+					g2d.drawOval(newDrawRect.x, newDrawRect.y , 10, 10);
+					
+					g2d.setTransform(oldTransform);
+
+					i++;
+				}
+			}	
+		}
+
+	}
+	
 	public Game getGame() {
 		return game;
 	}

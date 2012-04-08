@@ -22,6 +22,7 @@ public class Game {
 	
 	private GameBoard gameBoard;
 	private List<Player> players;
+	private int playerOnTurn;
 	
 	/**
 	 * A reference to a game representation
@@ -33,7 +34,7 @@ public class Game {
 	}
 	
 	public Game(MonopolyType monopolyType) {
-		
+		this.playerOnTurn = 0;
 	}
 	
 	/**
