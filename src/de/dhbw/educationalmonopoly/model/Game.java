@@ -72,4 +72,12 @@ public class Game {
 	public void setPlayers(List<Player> players) {
 		this.players = players;
 	}
+
+	public int getPlayerOnTurn() {
+		return playerOnTurn;
+	}
+
+	public void setPlayerOnTurn(int playerOnTurn) {
+		this.playerOnTurn = playerOnTurn;
+	}
 }

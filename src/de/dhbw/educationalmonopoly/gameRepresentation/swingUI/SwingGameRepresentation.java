@@ -6,7 +6,6 @@
 package de.dhbw.educationalmonopoly.gameRepresentation.swingUI;
 
 import java.awt.Color;
-
 import javax.swing.JFrame;
 
 import de.dhbw.educationalmonopoly.gameRepresentation.IGameRepresentation;
@@ -29,20 +28,21 @@ public class SwingGameRepresentation implements IGameRepresentation {
 		mainWindow.setVisible(true); 
 		mainWindow.setTitle("Educational Monopoly");
 		
+		//FlowLayout mgr = new FlowLayout(BoxLayout.Y_AXIS);
+		//this.mainWindow.setLayout(mgr);
+		
 		this.gameBoardPanel = new GameBoardPanel();
 		this.gameBoardPanel.setSize(800,768);
-				
-		mainWindow.add(this.gameBoardPanel);  
-		
+						
 		this.playerActionPanel = new PlayerActionPanel();
-
 		this.playerActionPanel.setSize(200, 768);
-		//this.playerActionPanel.revalidate();
-		//this.playerActionPanel.repaint();
+		this.playerActionPanel.revalidate();
 		this.playerActionPanel.setBackground(new Color(255,0,0));
-		mainWindow.add(this.playerActionPanel);
+		
+		mainWindow.getContentPane().add(this.gameBoardPanel);  
+		mainWindow.getContentPane().add(this.playerActionPanel);
 
-	} 
+	}
 
 	@Override 
 	public void drawField() {
