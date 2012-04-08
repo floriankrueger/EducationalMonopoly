@@ -231,7 +231,7 @@ public class GameBoardPanel extends JPanel {
 	private void drawStreetField(final Field field, final Graphics2D g2d,
 			Rectangle rect) {
 		g2d.setColor( ((StreetField)field).getColor() );
-		Rectangle fillRect = rect;
+		Rectangle fillRect = (Rectangle) rect.clone();
 		
 		fillRect.height = (int) (this.stripeThickness*rect.height);
 		
