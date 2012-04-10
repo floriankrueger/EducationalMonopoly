@@ -30,6 +30,7 @@ public class SwingGameRepresentation implements IGameRepresentation {
 	
 	{
 		this.mainWindow = new JFrame();
+		mainWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		mainWindow.setLayout(new BorderLayout());
 		mainWindow.setPreferredSize(new Dimension(1024,768));
 		mainWindow.setResizable(false);
