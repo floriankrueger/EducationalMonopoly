@@ -49,17 +49,17 @@ public class SwingGameRepresentation implements IGameRepresentation {
 		
 		// create game board panel and set the dimensions
 		this.gameBoardPanel = new GameBoardPanel();
-		this.gameBoardPanel.setPreferredSize(new Dimension(800,768));
+		this.gameBoardPanel.setPreferredSize(new Dimension(768,768));
 		
 		// add the game board panel to the container and glue it to the left border
 		pane.add(this.gameBoardPanel, BorderLayout.LINE_START);
 						
 		// create the player action panel and set the dimensions
 		this.playerActionPanel = new PlayerActionPanel();
-		this.playerActionPanel.setPreferredSize(new Dimension(200,768));
+		this.playerActionPanel.setPreferredSize(new Dimension(256,768));
 		
 		// DEBUG
-		this.playerActionPanel.setBackground(new Color(255,0,0));
+		this.playerActionPanel.setBackground(new Color(102,102,102));
 		
 		// add the action panel to the container and glue it to the right border
 		pane.add(this.playerActionPanel, BorderLayout.LINE_END);
