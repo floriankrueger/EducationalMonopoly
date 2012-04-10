@@ -29,26 +29,42 @@ public class SwingGameRepresentation implements IGameRepresentation {
 	private PlayerActionPanel playerActionPanel;
 	
 	{
+		// create main window
 		this.mainWindow = new JFrame();
-		mainWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		mainWindow.setLayout(new BorderLayout());
-		mainWindow.setPreferredSize(new Dimension(1024,768));
-		mainWindow.setResizable(false);
 		mainWindow.setTitle("Educational Monopoly");
 		
+		// set Layout Manager to BorderLayout (this is default anyways)
+		mainWindow.setLayout(new BorderLayout());
+		
+		// specify the size for the main window and prevent the user from resizing it
+		mainWindow.setPreferredSize(new Dimension(1024,768));
+		mainWindow.setResizable(false);
+		
+		// once the main window is closed the program should end
+		mainWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		// retrieve the container from the main window where all 
+		// other components should be put on
 		Container pane = mainWindow.getContentPane();
 		
+		// create game board panel and set the dimensions
 		this.gameBoardPanel = new GameBoardPanel();
 		this.gameBoardPanel.setPreferredSize(new Dimension(800,768));
+		
+		// add the game board panel to the container and glue it to the left border
 		pane.add(this.gameBoardPanel, BorderLayout.LINE_START);
 						
+		// create the player action panel and set the dimensions
 		this.playerActionPanel = new PlayerActionPanel();
 		this.playerActionPanel.setPreferredSize(new Dimension(200,768));
-		//this.playerActionPanel.revalidate();
+		
+		// DEBUG
 		this.playerActionPanel.setBackground(new Color(255,0,0));
 		
+		// add the action panel to the container and glue it to the right border
 		pane.add(this.playerActionPanel, BorderLayout.LINE_END);
 		
+		// apply all dimensions and layouts and show the main window
 		mainWindow.pack();
 		mainWindow.setVisible(true); 
 	}
