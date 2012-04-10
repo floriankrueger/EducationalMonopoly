@@ -16,7 +16,6 @@ public class PlayerActionPanel extends JPanel {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	
 	public PlayerActionPanel() {
 		JButton diceButton = new JButton();
 		diceButton.setText("Dice");

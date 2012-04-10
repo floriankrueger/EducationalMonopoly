@@ -5,8 +5,14 @@
 */
 package de.dhbw.educationalmonopoly.gameRepresentation.swingUI;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Container;
+import java.awt.Dimension;
+
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JSplitPane;
 
 import de.dhbw.educationalmonopoly.gameRepresentation.IGameRepresentation;
 import de.dhbw.educationalmonopoly.model.Game;
@@ -24,24 +30,26 @@ public class SwingGameRepresentation implements IGameRepresentation {
 	
 	{
 		this.mainWindow = new JFrame();
-		mainWindow.setSize(1024,768);
-		mainWindow.setVisible(true); 
+		mainWindow.setLayout(new BorderLayout());
+		mainWindow.setPreferredSize(new Dimension(1024,768));
+		mainWindow.setResizable(false);
 		mainWindow.setTitle("Educational Monopoly");
 		
-		//FlowLayout mgr = new FlowLayout(BoxLayout.Y_AXIS);
-		//this.mainWindow.setLayout(mgr);
+		Container pane = mainWindow.getContentPane();
 		
 		this.gameBoardPanel = new GameBoardPanel();
-		this.gameBoardPanel.setSize(800,768);
+		this.gameBoardPanel.setPreferredSize(new Dimension(800,768));
+		pane.add(this.gameBoardPanel, BorderLayout.LINE_START);
 						
 		this.playerActionPanel = new PlayerActionPanel();
-		this.playerActionPanel.setSize(200, 768);
-		this.playerActionPanel.revalidate();
+		this.playerActionPanel.setPreferredSize(new Dimension(200,768));
+		//this.playerActionPanel.revalidate();
 		this.playerActionPanel.setBackground(new Color(255,0,0));
 		
-		mainWindow.getContentPane().add(this.gameBoardPanel);  
-		mainWindow.getContentPane().add(this.playerActionPanel);
-
+		pane.add(this.playerActionPanel, BorderLayout.LINE_END);
+		
+		mainWindow.pack();
+		mainWindow.setVisible(true); 
 	}
 
 	@Override 
