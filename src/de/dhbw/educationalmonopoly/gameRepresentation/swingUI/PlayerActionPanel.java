@@ -10,6 +10,8 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -18,13 +20,21 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class PlayerActionPanel extends JPanel {
+import de.dhbw.educationalmonopoly.gameRepresentation.PlayerActionDelegate;
+import de.dhbw.educationalmonopoly.model.DiceRoll;
+import de.dhbw.educationalmonopoly.model.Game;
+import de.dhbw.educationalmonopoly.model.Player;
+
+public class PlayerActionPanel extends JPanel implements ActionListener, PlayerActionDelegate {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
+	// Game Components
+	private Game game;
+	
 	// UI Components
 	private JLabel headerLabel;
 	private JButton diceButton;
@@ -32,7 +42,10 @@ public class PlayerActionPanel extends JPanel {
 	private JLabel currentPlayerHeader;
 	private JLabel currentPlayerLabel;
 	
-	public PlayerActionPanel() {
+	// PlayerActionDelegate
+	private Player currentPlayer;
+	
+	{
 		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 		this.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
 		
@@ -68,5 +81,51 @@ public class PlayerActionPanel extends JPanel {
 		this.diceButton.setText("Dice");
 		this.diceButton.setBounds(0, 0, 100, 50);
 		this.diceButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+		this.diceButton.setEnabled(false);
+		this.diceButton.addActionListener(this);
 	}
+
+	public Game getGame() {
+		return game;
+	}
+
+	public void setGame(Game game) {
+		this.game = game;
+	}
+	
+	// PLAYER ACTION DELEGATE
+	
+	public void setCurrentPlayer(Player player) {
+		this.currentPlayer = player;
+		this.currentPlayerLabel.setText(this.currentPlayer.getName());
+	}
+	
+	@Override
+	public void playerShouldRollDice() {
+		// show 'roll dice' button
+		this.diceButton.setEnabled(true);
+	}
+	
+	public void playerDidRollDice() {
+		// hide the dice button
+		this.diceButton.setEnabled(false);
+		
+		// actually roll the dice
+		DiceRoll diceRoll = this.game.getDice().roll();
+		
+		// TODO : show dice value(s)
+		System.out.println("Dice : " + diceRoll.getFirstDice() + ", " + diceRoll.getSecondDice());
+		
+		if (null != this.currentPlayer) {
+			this.currentPlayer.getActionImplementor().playerDidRollDice(diceRoll);
+		}
+	}
+	
+	// ACTION LISTENER
+	
+	public void actionPerformed(ActionEvent e) {
+        if (this.diceButton == e.getSource()) {
+        	this.playerDidRollDice();
+        }
+    }
 }

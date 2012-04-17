@@ -6,11 +6,13 @@
 package de.dhbw.educationalmonopoly.gameRepresentation;
 
 import de.dhbw.educationalmonopoly.model.Game;
+import de.dhbw.educationalmonopoly.model.Player;
 
 /**
  * @author benjamin
  */
-public interface IGameRepresentation {	
+public interface IGameRepresentation {
+	
 	/**
 	 * Shows a menu from which a match can be started
 	 */
@@ -26,4 +28,13 @@ public interface IGameRepresentation {
 	 */
 	public void setGame(Game game);
 
+	/**
+	 * Displays Information about the current player
+	 */
+	public void setCurrentPlayer(Player player);
+	
+	/**
+	 * Provides a reference to a local instance of a <code>PlayerActionDelegate</code>
+	 */
+	public PlayerActionDelegate getPlayerActionDelegate();
 }

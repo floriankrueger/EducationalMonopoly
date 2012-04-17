@@ -10,12 +10,12 @@ import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
 
-import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JSplitPane;
 
 import de.dhbw.educationalmonopoly.gameRepresentation.IGameRepresentation;
+import de.dhbw.educationalmonopoly.gameRepresentation.PlayerActionDelegate;
 import de.dhbw.educationalmonopoly.model.Game;
+import de.dhbw.educationalmonopoly.model.Player;
 
 /**
  * @author benjamin
@@ -82,8 +82,18 @@ public class SwingGameRepresentation implements IGameRepresentation {
 	@Override
 	public void setGame(Game game) {
 		this.game = game;
-		gameBoardPanel.setGame(this.game); 
+		this.gameBoardPanel.setGame(this.game);
+		this.playerActionPanel.setGame(this.game);
 	}
 
+	@Override
+	public void setCurrentPlayer(Player player) {
+		this.playerActionPanel.setCurrentPlayer(player);
+	}
+	
+	@Override
+	public PlayerActionDelegate getPlayerActionDelegate() {
+		return this.playerActionPanel;
+	}
 }
 

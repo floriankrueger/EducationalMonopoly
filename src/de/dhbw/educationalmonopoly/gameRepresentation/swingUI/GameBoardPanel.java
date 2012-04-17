@@ -76,11 +76,8 @@ public class GameBoardPanel extends JPanel {
 	      int fieldWidth = 60;
 	      int fieldHeight = 80;
 	      
-	      int currentX = w - fieldHeight - 40;
-	      int currentY = h - fieldHeight - 50;
-	      
-	      //TODO: remove me once positioning works
-	      //DEBUG: g2d.fillRect(0, 0, 100, 100);
+	      int currentX = w - fieldHeight - 0;
+	      int currentY = h - fieldHeight - 0;
 	      
 	      this.drawGameField(g2d, rowLength, currentX, currentY, fieldWidth,
 				fieldHeight);

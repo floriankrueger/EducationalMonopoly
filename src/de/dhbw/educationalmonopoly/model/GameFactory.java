@@ -18,14 +18,19 @@ public class GameFactory {
 		Game aGame = new Game(monopolyType);	
 
 		String fileName;
+		int initialBankBalance;
+		Dice dice;
 
 		switch (monopolyType) {
 		case CLASSIC:
 		default:
 			fileName = "classic.xml";
+			initialBankBalance = 200000;
+			dice = new Dice();
 			break;
 		}
 
+		// create game board
 		SAXParserFactory factory = SAXParserFactory.newInstance();
 		SAXParser saxParser = null;
 		
@@ -49,8 +54,14 @@ public class GameFactory {
 		
 		List<Field> fields = handler.getFields();
 		GameBoard aBoard = new GameBoard(fields);
-		
 		aGame.setGameBoard(aBoard);
+		
+		// set Dice
+		aGame.setDice(dice);
+		
+		// create bank
+		Bank bank = new Bank(initialBankBalance);
+		aGame.setBank(bank);
 		
 		return aGame;
 	}
