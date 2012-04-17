@@ -41,6 +41,9 @@ public class PlayerActionPanel extends JPanel implements ActionListener, PlayerA
 	private JPanel currentPlayerContainer;
 	private JLabel currentPlayerHeader;
 	private JLabel currentPlayerLabel;
+	private JPanel currentBalanceContainer;
+	private JLabel currentBalanceHeader;
+	private JLabel currentBalanceLabel;
 	
 	// PlayerActionDelegate
 	private Player currentPlayer;
@@ -52,8 +55,10 @@ public class PlayerActionPanel extends JPanel implements ActionListener, PlayerA
 		this.createUIComponents();
 		
 		this.add(this.headerLabel);
-		this.add(Box.createRigidArea(new Dimension(0,10)));
+		this.add(Box.createRigidArea(new Dimension(0,50)));
 		this.add(this.currentPlayerContainer);
+		this.add(Box.createRigidArea(new Dimension(0,10)));
+		this.add(this.currentBalanceContainer);
 		this.add(Box.createVerticalGlue());
 		this.add(this.diceButton);
 	}
@@ -75,6 +80,17 @@ public class PlayerActionPanel extends JPanel implements ActionListener, PlayerA
 		this.currentPlayerContainer.add(Box.createHorizontalGlue());
 		this.currentPlayerContainer.add(this.currentPlayerLabel);
 		this.currentPlayerContainer.setAlignmentX(Component.CENTER_ALIGNMENT);
+		
+		// current player's balance label
+		this.currentBalanceContainer = new JPanel();
+		this.currentBalanceContainer.setLayout(new BoxLayout(this.currentBalanceContainer, BoxLayout.LINE_AXIS));
+		this.currentBalanceContainer.setBackground(new Color(102,102,102));
+		this.currentBalanceHeader = new JLabel("Kontostand: ");
+		this.currentBalanceLabel = new JLabel("test");
+		this.currentBalanceContainer.add(this.currentBalanceHeader);
+		this.currentBalanceContainer.add(Box.createHorizontalGlue());
+		this.currentBalanceContainer.add(this.currentBalanceLabel);
+		this.currentBalanceContainer.setAlignmentX(Component.CENTER_ALIGNMENT);
 		
 		// dice button
 		this.diceButton = new JButton();
@@ -98,6 +114,7 @@ public class PlayerActionPanel extends JPanel implements ActionListener, PlayerA
 	public void setCurrentPlayer(Player player) {
 		this.currentPlayer = player;
 		this.currentPlayerLabel.setText(this.currentPlayer.getName());
+		this.currentBalanceLabel.setText(this.currentPlayer.getBalance() + " EUR");
 	}
 	
 	@Override
