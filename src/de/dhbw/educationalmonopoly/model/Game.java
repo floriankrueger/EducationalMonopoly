@@ -156,12 +156,16 @@ public class Game implements PlayerActionListener {
 		// TODO : move to new field (animated ?)
 		int newFieldIndex = this.playerOnTurn.getToken().getFieldIndex() + diceRoll.value();
 		int gameBoardSize = this.gameBoard.getFields().size();
+		
+		// player moved over start
 		while (gameBoardSize <= newFieldIndex) {
 			// pay salary
 			this.playerDidCompleteRound();
 			newFieldIndex -= gameBoardSize;
 		}
-		this.playerOnTurn.getToken().setFieldIndex(newFieldIndex);
+		
+		//this.playerOnTurn.getToken().setFieldIndex(newFieldIndex);
+		this.gameRepresenation.moveTokenToFieldIndexAnimated(this.playerOnTurn.getToken(), newFieldIndex, true);
 		
 		// TODO : extract field
 		// TODO : request player reaction to field
@@ -220,6 +224,7 @@ public class Game implements PlayerActionListener {
 			if (!p.isBankrupt()) {
 				nextPlayer = p;
 			}
+			
 		}
 		
 		return nextPlayer;

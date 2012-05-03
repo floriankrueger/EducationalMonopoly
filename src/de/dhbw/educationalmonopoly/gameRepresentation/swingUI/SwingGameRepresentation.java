@@ -11,11 +11,13 @@ import java.awt.Container;
 import java.awt.Dimension;
 
 import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
 
 import de.dhbw.educationalmonopoly.gameRepresentation.IGameRepresentation;
 import de.dhbw.educationalmonopoly.gameRepresentation.PlayerActionDelegate;
 import de.dhbw.educationalmonopoly.model.Game;
 import de.dhbw.educationalmonopoly.model.Player;
+import de.dhbw.educationalmonopoly.model.Token;
 
 /**
  * @author benjamin
@@ -94,6 +96,37 @@ public class SwingGameRepresentation implements IGameRepresentation {
 	@Override
 	public PlayerActionDelegate getPlayerActionDelegate() {
 		return this.playerActionPanel;
+	}
+
+	@Override
+	public void moveTokenToFieldIndexAnimated(final Token token, final int fieldIndex,
+			boolean animated) {
+		
+		animateFieldTransition(token, fieldIndex);
+		
+		Runnable doWorkRunnable = new Runnable() {
+		    public void run() { animateFieldTransition(token, fieldIndex); }
+		};
+		
+		//SwingUtilities.invokeLater(doWorkRunnable);
+		new Thread(doWorkRunnable).start();
+	}
+
+	private void animateFieldTransition(Token token, int fieldIndex) {
+		while (token.getFieldIndex() < fieldIndex) {
+			// we need to keep on moving forward
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				// could not slow down animation
+				e.printStackTrace();
+			}
+			
+			int oldFieldIndex = token.getFieldIndex();
+			oldFieldIndex++;
+			token.setFieldIndex(oldFieldIndex);
+			this.gameBoardPanel.repaint();
+		}
 	}
 }
 

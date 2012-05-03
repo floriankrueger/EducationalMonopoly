@@ -142,7 +142,13 @@ public class PlayerActionPanel extends JPanel implements ActionListener, PlayerA
 	
 	public void actionPerformed(ActionEvent e) {
         if (this.diceButton == e.getSource()) {
-        	this.playerDidRollDice();
+
+        	Runnable doWorkRunnable = new Runnable() {
+    		    public void run() { playerDidRollDice(); }
+    		};
+    		
+    		//SwingUtilities.invokeLater(doWorkRunnable);
+    		new Thread(doWorkRunnable).start();
         }
     }
 }

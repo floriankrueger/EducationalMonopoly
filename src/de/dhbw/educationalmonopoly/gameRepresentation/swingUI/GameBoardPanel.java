@@ -81,7 +81,7 @@ public class GameBoardPanel extends JPanel {
 	      
 	      this.drawGameField(g2d, rowLength, currentX, currentY, fieldWidth,
 				fieldHeight);
-	      
+	      	      
 	      this.drawTokens(g2d);
 	  }
 

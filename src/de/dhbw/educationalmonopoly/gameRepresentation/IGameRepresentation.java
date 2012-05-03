@@ -7,6 +7,7 @@ package de.dhbw.educationalmonopoly.gameRepresentation;
 
 import de.dhbw.educationalmonopoly.model.Game;
 import de.dhbw.educationalmonopoly.model.Player;
+import de.dhbw.educationalmonopoly.model.Token;
 
 /**
  * @author benjamin
@@ -37,4 +38,10 @@ public interface IGameRepresentation {
 	 * Provides a reference to a local instance of a <code>PlayerActionDelegate</code>
 	 */
 	public PlayerActionDelegate getPlayerActionDelegate();
+	
+	/**
+	 * Moves the given token to a given field index. Optionally animates this transition.
+	 */
+	public void moveTokenToFieldIndexAnimated(Token token, int fieldIndex, boolean animated);
+	
 }
