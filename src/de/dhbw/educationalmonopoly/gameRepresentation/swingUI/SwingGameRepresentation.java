@@ -114,7 +114,9 @@ public class SwingGameRepresentation implements IGameRepresentation {
 	}
 
 	private void animateFieldTransition(Token token, int fieldIndex) {
-		while (token.getFieldIndex() < fieldIndex) {
+		System.out.println("Animation moving Tokens began.");
+		
+		while (token.getFieldIndex() != fieldIndex) {
 			// we need to keep on moving forward
 			try {
 				Thread.sleep(500);
@@ -124,8 +126,12 @@ public class SwingGameRepresentation implements IGameRepresentation {
 			}
 			
 			int oldFieldIndex = token.getFieldIndex();
-			oldFieldIndex++;
-			token.setFieldIndex(oldFieldIndex);
+			int newFieldIndex = oldFieldIndex+1;
+			
+			if (newFieldIndex == game.getGameBoard().getFields().size()) {
+				newFieldIndex = 0;
+			}
+			token.setFieldIndex(newFieldIndex);
 			this.gameBoardPanel.repaint();
 		}
 		
@@ -134,7 +140,10 @@ public class SwingGameRepresentation implements IGameRepresentation {
 	}
 	
 	private void tokenMovementCompleted() {
+		System.out.println("Animation moving Tokens completed.");
 
+		// inform game, that movement completed
+		this.game.tokenMovementCompleted();
 	}
 }
 

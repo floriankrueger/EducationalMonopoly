@@ -37,6 +37,7 @@ public class Game implements IPlayerActionListener {
 	private Bank bank;
 	private Player winner;
 	private Dice dice;
+	private DiceRoll lastDiceRoll;
 	
 	// CURRENT TURN DATA
 	
@@ -147,6 +148,9 @@ public class Game implements IPlayerActionListener {
 	}
 	
 	public void playerDidRollDice(Player player, DiceRoll diceRoll) {
+		// store diceRoll
+		this.lastDiceRoll = diceRoll;
+		
 		// TODO : notify game representation
 		System.out.println("'" + this.playerOnTurn.getName() + "' did roll dice");
 		
@@ -164,15 +168,16 @@ public class Game implements IPlayerActionListener {
 			newFieldIndex -= gameBoardSize;
 		}
 		
+		// when animation completes, tokenMovementCompleted() is called
 		this.gameRepresenation.moveTokenToFieldIndexAnimated(this.playerOnTurn.getToken(), newFieldIndex, true);
 		
 		// TODO : extract field
 		// TODO : request player reaction to field
-		
-		// TODO : use callback method for endTurn
-		
+	}
+	
+	public void tokenMovementCompleted() {
 		// re-roll the dice if last roll was doubles
-		if ((this.currentDiceRollCount < 3) && (diceRoll.isDoubles())) {
+		if ((this.currentDiceRollCount < 3) && (this.lastDiceRoll.isDoubles())) {
 			this.waitForDiceRoll();
 		} else {
 			this.endTurn();
