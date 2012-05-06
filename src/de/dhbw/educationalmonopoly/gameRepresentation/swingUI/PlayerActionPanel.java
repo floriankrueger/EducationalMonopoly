@@ -19,6 +19,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 import de.dhbw.educationalmonopoly.gameRepresentation.PlayerActionDelegate;
 import de.dhbw.educationalmonopoly.model.DiceRoll;
@@ -124,8 +125,12 @@ public class PlayerActionPanel extends JPanel implements ActionListener, PlayerA
 	}
 	
 	public void playerDidRollDice() {
-		// hide the dice button
-		this.diceButton.setEnabled(false);
+		// hide the dice button, force this to happen directly
+		// by dispatching it to the swing thread
+		Runnable swingRunnable = new Runnable() {
+		    public void run() { diceButton.setEnabled(false); }
+		};
+		SwingUtilities.invokeLater(swingRunnable);
 		
 		// actually roll the dice
 		DiceRoll diceRoll = this.game.getDice().roll();
@@ -142,7 +147,7 @@ public class PlayerActionPanel extends JPanel implements ActionListener, PlayerA
 	
 	public void actionPerformed(ActionEvent e) {
         if (this.diceButton == e.getSource()) {
-
+        	        	
         	Runnable doWorkRunnable = new Runnable() {
     		    public void run() { playerDidRollDice(); }
     		};
