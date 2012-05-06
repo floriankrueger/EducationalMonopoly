@@ -101,14 +101,11 @@ public class SwingGameRepresentation implements IGameRepresentation {
 	@Override
 	public void moveTokenToFieldIndexAnimated(final Token token, final int fieldIndex,
 			boolean animated) {
-		
-		animateFieldTransition(token, fieldIndex);
-		
+				
 		Runnable doWorkRunnable = new Runnable() {
 		    public void run() { animateFieldTransition(token, fieldIndex); }
 		};
 		
-		//SwingUtilities.invokeLater(doWorkRunnable);
 		new Thread(doWorkRunnable).start();
 	}
 
