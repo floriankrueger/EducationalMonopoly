@@ -38,6 +38,9 @@ public class GameBoardPanel extends JPanel {
 
 	// thickness of color stripe in percent of the field height
 	private final float stripeThickness = 0.3f;
+	
+	// additional insets to center field
+	private int customInset = 30;
 
 	// reference to the game drawn
 	private Game game;
@@ -57,8 +60,8 @@ public class GameBoardPanel extends JPanel {
 	      Dimension size = getSize();
 	      Insets insets = getInsets();
 
-	      int w =  size.width - insets.left - insets.right;
-	      int h =  size.height - insets.top - insets.bottom;
+	      int w =  size.width - insets.left - insets.right - customInset;
+	      int h =  size.height - insets.top - insets.bottom - customInset;
 	      
 	      int fields = this.gameBoard.getFields().size();
 	      

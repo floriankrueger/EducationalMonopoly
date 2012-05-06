@@ -94,6 +94,9 @@ public class Game implements IPlayerActionListener {
 			p.getToken().setFieldIndex(0);
 		}
 		
+		// draw tokens at initial position
+		this.gameRepresenation.drawField();
+		
 		// TODO : notify game representation
 		System.out.println("game did start");
 		
