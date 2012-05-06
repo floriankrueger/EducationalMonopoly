@@ -164,14 +164,12 @@ public class Game implements IPlayerActionListener {
 			newFieldIndex -= gameBoardSize;
 		}
 		
-		//this.playerOnTurn.getToken().setFieldIndex(newFieldIndex);
 		this.gameRepresenation.moveTokenToFieldIndexAnimated(this.playerOnTurn.getToken(), newFieldIndex, true);
 		
 		// TODO : extract field
 		// TODO : request player reaction to field
 		
-		// represent game state
-		this.gameRepresenation.drawField();
+		// TODO : use callback method for endTurn
 		
 		// re-roll the dice if last roll was doubles
 		if ((this.currentDiceRollCount < 3) && (diceRoll.isDoubles())) {

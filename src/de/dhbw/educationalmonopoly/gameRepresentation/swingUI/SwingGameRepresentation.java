@@ -9,9 +9,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
-
 import javax.swing.JFrame;
-import javax.swing.SwingUtilities;
 
 import de.dhbw.educationalmonopoly.gameRepresentation.IGameRepresentation;
 import de.dhbw.educationalmonopoly.gameRepresentation.PlayerActionDelegate;
@@ -98,10 +96,16 @@ public class SwingGameRepresentation implements IGameRepresentation {
 		return this.playerActionPanel;
 	}
 
+	/*
+	 * Token Movement Methods
+	 * 
+	 */
+	
 	@Override
 	public void moveTokenToFieldIndexAnimated(final Token token, final int fieldIndex,
 			boolean animated) {
 				
+		// we want to control the animation from a background thread, not blocking the UI
 		Runnable doWorkRunnable = new Runnable() {
 		    public void run() { animateFieldTransition(token, fieldIndex); }
 		};
@@ -124,6 +128,13 @@ public class SwingGameRepresentation implements IGameRepresentation {
 			token.setFieldIndex(oldFieldIndex);
 			this.gameBoardPanel.repaint();
 		}
+		
+		// inform, that movement is complete
+		this.tokenMovementCompleted();
+	}
+	
+	private void tokenMovementCompleted() {
+
 	}
 }
 
