@@ -45,6 +45,8 @@ public class PlayerActionPanel extends JPanel implements ActionListener, PlayerA
 	private JPanel currentBalanceContainer;
 	private JLabel currentBalanceHeader;
 	private JLabel currentBalanceLabel;
+	private JPanel matchInfoContainer;
+	private JLabel matchInfoLabel;
 	
 	// PlayerActionDelegate
 	private Player currentPlayer;
@@ -60,6 +62,10 @@ public class PlayerActionPanel extends JPanel implements ActionListener, PlayerA
 		this.add(this.currentPlayerContainer);
 		this.add(Box.createRigidArea(new Dimension(0,10)));
 		this.add(this.currentBalanceContainer);
+		
+		this.add(Box.createRigidArea(new Dimension(0,50)));
+		this.add(this.matchInfoContainer);
+		
 		this.add(Box.createVerticalGlue());
 		this.add(this.diceButton);
 	}
@@ -92,6 +98,14 @@ public class PlayerActionPanel extends JPanel implements ActionListener, PlayerA
 		this.currentBalanceContainer.add(Box.createHorizontalGlue());
 		this.currentBalanceContainer.add(this.currentBalanceLabel);
 		this.currentBalanceContainer.setAlignmentX(Component.CENTER_ALIGNMENT);
+		
+		// show match info
+		this.matchInfoContainer = new JPanel();
+		this.matchInfoContainer.setLayout(new BoxLayout(this.matchInfoContainer, BoxLayout.LINE_AXIS));
+		this.matchInfoContainer.setBackground(new Color(102,102,102));
+		this.matchInfoLabel = new JLabel("TestMatchInfo");
+		this.matchInfoContainer.add(this.matchInfoLabel);
+		this.matchInfoContainer.setAlignmentX(Component.CENTER_ALIGNMENT);
 		
 		// dice button
 		this.diceButton = new JButton();
@@ -134,10 +148,7 @@ public class PlayerActionPanel extends JPanel implements ActionListener, PlayerA
 		
 		// actually roll the dice
 		DiceRoll diceRoll = this.game.getDice().roll();
-		
-		// TODO : show dice value(s)
-		System.out.println("Dice : " + diceRoll.getFirstDice() + ", " + diceRoll.getSecondDice());
-		
+				
 		if (null != this.currentPlayer) {
 			this.currentPlayer.getActionImplementor().playerDidRollDice(diceRoll);
 		}
@@ -156,4 +167,8 @@ public class PlayerActionPanel extends JPanel implements ActionListener, PlayerA
     		new Thread(doWorkRunnable).start();
         }
     }
+	
+	public JLabel getMatchInfoLabel() {
+		return matchInfoLabel;
+	}
 }

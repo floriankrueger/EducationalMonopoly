@@ -8,6 +8,7 @@ package de.dhbw.educationalmonopoly.gameRepresentation;
 import de.dhbw.educationalmonopoly.model.Game;
 import de.dhbw.educationalmonopoly.model.Player;
 import de.dhbw.educationalmonopoly.model.Token;
+import de.dhbw.educationalmonopoly.model.DiceRoll;
 
 /**
  * @author benjamin
@@ -44,4 +45,9 @@ public interface IGameRepresentation {
 	 */
 	public void moveTokenToFieldIndexAnimated(Token token, int fieldIndex, boolean animated);
 	
+	/**
+	 * Displays the curent dice roll
+	 * @param diceRoll
+	 */
+	public void displayDiceRoll(DiceRoll diceRoll);
 }

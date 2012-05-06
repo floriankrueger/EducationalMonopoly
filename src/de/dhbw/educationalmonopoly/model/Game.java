@@ -10,6 +10,8 @@ import java.util.List;
 
 import de.dhbw.educationalmonopoly.core.IPlayerActionListener;
 import de.dhbw.educationalmonopoly.gameRepresentation.IGameRepresentation;
+import de.dhbw.educationalmonopoly.model.field.Field;
+import de.dhbw.educationalmonopoly.model.field.IBuyable;
 
 /**
  * @author benjamin
@@ -155,7 +157,7 @@ public class Game implements IPlayerActionListener {
 		this.lastDiceRoll = diceRoll;
 		
 		// TODO : notify game representation
-		System.out.println("'" + this.playerOnTurn.getName() + "' did roll dice");
+		this.gameRepresenation.displayDiceRoll(diceRoll);
 		
 		// count the dice rolls in current turn
 		this.currentDiceRollCount++;
@@ -173,17 +175,32 @@ public class Game implements IPlayerActionListener {
 		
 		// when animation completes, tokenMovementCompleted() is called
 		this.gameRepresenation.moveTokenToFieldIndexAnimated(this.playerOnTurn.getToken(), newFieldIndex, true);
-		
-		// TODO : extract field
-		// TODO : request player reaction to field
 	}
 	
 	public void tokenMovementCompleted() {
+		int currentFieldIndex = this.playerOnTurn.getToken().getFieldIndex();
+		Field currentField = this.gameBoard.getFields().get(currentFieldIndex);
+		this.fieldInteraction(currentField);
+		
 		// re-roll the dice if last roll was doubles
 		if ((this.currentDiceRollCount < 3) && (this.lastDiceRoll.isDoubles())) {
 			this.waitForDiceRoll();
 		} else {
 			this.endTurn();
+		}
+	}
+	
+	private void fieldInteraction(Field field) {
+		if (field instanceof IBuyable) {
+			// cast the field
+			IBuyable myField = (IBuyable) field;
+			if (myField.hasOwner()) {
+				//TODO: charge fee if houses or hotels exist
+			} else {
+				//TODO: offer player to buy street
+				myField.buy(this.playerOnTurn);
+				System.out.println(this.playerOnTurn.getName()+" purchased "+field.getName());
+			}
 		}
 	}
 	

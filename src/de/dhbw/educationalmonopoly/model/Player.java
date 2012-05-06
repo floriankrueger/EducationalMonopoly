@@ -36,6 +36,12 @@ public class Player {
 		}
 	}
 	
+	public void subtractMoney(double price) {
+		if (price >= 0) {
+			this.balance -= price;
+		}
+	}
+	
 	/**
 	 * Asks the player's <code>ActionImplementor</code> to ask the user to
 	 * roll the dice.

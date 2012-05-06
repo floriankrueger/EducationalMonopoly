@@ -13,6 +13,7 @@ import javax.swing.JFrame;
 
 import de.dhbw.educationalmonopoly.gameRepresentation.IGameRepresentation;
 import de.dhbw.educationalmonopoly.gameRepresentation.PlayerActionDelegate;
+import de.dhbw.educationalmonopoly.model.DiceRoll;
 import de.dhbw.educationalmonopoly.model.Game;
 import de.dhbw.educationalmonopoly.model.Player;
 import de.dhbw.educationalmonopoly.model.Token;
@@ -144,6 +145,15 @@ public class SwingGameRepresentation implements IGameRepresentation {
 
 		// inform game, that movement completed
 		this.game.tokenMovementCompleted();
+	}
+
+	/*
+	 * GAME STATE DISPLAY 
+	 */
+	
+	@Override
+	public void displayDiceRoll(DiceRoll diceRoll) {
+		this.playerActionPanel.getMatchInfoLabel().setText("Dice Roll: "+diceRoll.getFirstDice()+", "+diceRoll.getSecondDice());
 	}
 }
 

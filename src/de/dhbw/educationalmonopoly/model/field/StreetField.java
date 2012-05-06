@@ -35,6 +35,15 @@ public class StreetField extends CollectableField implements IBuyable {
 	@Override
 	public void buy(Player buyer) {
 		// TODO implement purchase process
+		buyer.subtractMoney(this.price);
+		
+		if (!buyer.isBankrupt()) {
+			this.setOwner(buyer);
+		}
+	}
+
+	public void setOwner(Player owner) {
+		this.owner = owner;
 	}
 
 }
