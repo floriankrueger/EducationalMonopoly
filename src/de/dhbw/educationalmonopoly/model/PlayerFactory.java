@@ -7,7 +7,7 @@
 package de.dhbw.educationalmonopoly.model;
 
 import de.dhbw.educationalmonopoly.core.LocalPlayerActionImplementor;
-import de.dhbw.educationalmonopoly.core.PlayerActionImplementor;
+import de.dhbw.educationalmonopoly.core.IPlayerActionImplementor;
 import de.dhbw.educationalmonopoly.model.Game;
 
 public class PlayerFactory {
@@ -25,7 +25,7 @@ public class PlayerFactory {
 		
 		Player aPlayer = new Player(name, initialAccountBalance);
 		
-		PlayerActionImplementor actionImplementor = new LocalPlayerActionImplementor(game);
+		IPlayerActionImplementor actionImplementor = new LocalPlayerActionImplementor(game);
 		aPlayer.setActionImplementor(actionImplementor);
 		
 		return aPlayer;

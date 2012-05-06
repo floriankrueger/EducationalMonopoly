@@ -1,11 +1,11 @@
 package de.dhbw.educationalmonopoly.model;
 
-import de.dhbw.educationalmonopoly.core.PlayerActionImplementor;
+import de.dhbw.educationalmonopoly.core.IPlayerActionImplementor;
 
 public class Player {
 
 	private Token token;
-	private PlayerActionImplementor actionImplementor;
+	private IPlayerActionImplementor actionImplementor;
 	
 	private boolean bankrupt;
 	private String name;
@@ -70,11 +70,11 @@ public class Player {
 		this.name = name;
 	}
 
-	public PlayerActionImplementor getActionImplementor() {
+	public IPlayerActionImplementor getActionImplementor() {
 		return actionImplementor;
 	}
 
-	public void setActionImplementor(PlayerActionImplementor actionImplementor) {
+	public void setActionImplementor(IPlayerActionImplementor actionImplementor) {
 		this.actionImplementor = actionImplementor;
 	}
 }

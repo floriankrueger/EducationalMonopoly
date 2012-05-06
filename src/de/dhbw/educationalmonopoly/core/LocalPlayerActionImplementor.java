@@ -13,7 +13,7 @@ import de.dhbw.educationalmonopoly.model.DiceRoll;
 import de.dhbw.educationalmonopoly.model.Game;
 import de.dhbw.educationalmonopoly.model.Player;
 
-public class LocalPlayerActionImplementor implements PlayerActionImplementor {
+public class LocalPlayerActionImplementor implements IPlayerActionImplementor {
 	
 	private Game game;
 	private Player player;
