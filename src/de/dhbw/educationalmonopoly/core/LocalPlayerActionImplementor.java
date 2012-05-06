@@ -17,10 +17,10 @@ public class LocalPlayerActionImplementor implements PlayerActionImplementor {
 	
 	private Game game;
 	private Player player;
-	private List<PlayerActionListener> observers;
+	private List<IPlayerActionListener> observers;
 
 	{
-		this.observers = new ArrayList<PlayerActionListener>();
+		this.observers = new ArrayList<IPlayerActionListener>();
 	}
 	
 	private LocalPlayerActionImplementor() {
@@ -39,18 +39,19 @@ public class LocalPlayerActionImplementor implements PlayerActionImplementor {
 	
 	@Override
 	public void playerDidRollDice(DiceRoll diceRoll) {
-		for (PlayerActionListener listener : this.observers) {
+		for (int i=0; i < this.observers.size(); i++) {
+			IPlayerActionListener listener = this.observers.get(i);
 			listener.playerDidRollDice(this.player, diceRoll);
-		}
+		}	
 	}
 
 	@Override
-	public void addPlayerActionListener(PlayerActionListener listener) {
+	public void addPlayerActionListener(IPlayerActionListener listener) {
 		this.observers.add(listener);
 	}
 
 	@Override
-	public void removePlayerActionListener(PlayerActionListener listener) {
+	public void removePlayerActionListener(IPlayerActionListener listener) {
 		this.observers.remove(listener);
 	}
 

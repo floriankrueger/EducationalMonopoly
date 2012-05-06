@@ -8,18 +8,18 @@ package de.dhbw.educationalmonopoly.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.dhbw.educationalmonopoly.core.PlayerActionListener;
+import de.dhbw.educationalmonopoly.core.IPlayerActionListener;
 import de.dhbw.educationalmonopoly.gameRepresentation.IGameRepresentation;
 
 /**
  * @author benjamin
  *
  */
-public class Game implements PlayerActionListener {
+public class Game implements IPlayerActionListener {
 	
 	public enum MonopolyType {
 		CLASSIC
-	}
+	} 
 	
 	public enum MonopolyTurnPhase {
 		ROLL_DICE,

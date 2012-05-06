@@ -25,6 +25,6 @@ public interface PlayerActionImplementor {
 	public void playerDidRollDice(DiceRoll diceRoll);
 	
 	// OBSERVER
-	public void addPlayerActionListener(PlayerActionListener listener);
-	public void removePlayerActionListener(PlayerActionListener listener); 
+	public void addPlayerActionListener(IPlayerActionListener listener);
+	public void removePlayerActionListener(IPlayerActionListener listener); 
 }
