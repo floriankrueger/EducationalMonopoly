@@ -46,7 +46,6 @@ public class Main {
 		// start the game
 		game.start();
 		
-
 		buyFieldAtFieldIndex(9);
 		game.endTurn();
 		buyFieldAtFieldIndex(3);
@@ -56,6 +55,10 @@ public class Main {
 		showFieldAtFieldIndex(3);
 		showFieldAtFieldIndex(1);
 		showFieldAtFieldIndex(9);
+		
+		System.out.println("--");
+		
+		game.getGameRepresenation().drawField();
 	}
 	
 	public static void movePlayerToFieldIndex(int fieldIndex) {
