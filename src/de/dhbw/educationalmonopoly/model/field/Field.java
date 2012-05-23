@@ -4,7 +4,7 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.geom.AffineTransform;
 
-public class Field {
+public abstract class Field {
 	
 	public enum DrawOrientation {
 		NORTH,
@@ -18,7 +18,7 @@ public class Field {
 	private AffineTransform transform;
 	// if needed this member stores the drawing position of the field
 	private Rectangle drawingRectangle;
-
+	
 	public Field(String name) {
 		this.setName(name);
 	}

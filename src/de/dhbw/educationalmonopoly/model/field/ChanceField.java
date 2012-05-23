@@ -1,6 +1,6 @@
 package de.dhbw.educationalmonopoly.model.field;
 
-public class ChanceField extends Field {
+public class ChanceField extends Field implements ICornerField {
 
 	public ChanceField() {
 		super("ChanceField");

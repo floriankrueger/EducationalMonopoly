@@ -16,5 +16,13 @@ public abstract class AbstractGameRepresentation implements IGameRepresentation 
 	public void moveTokenToFieldIndexAnimated(Token token, int fieldIndex, boolean animated) {
 		this.game.tokenMovementCompleted();
 	}
+
+	public Game getGame() {
+		return game;
+	}
+
+	public void setGame(Game game) {
+		this.game = game;
+	}
 	
 }
