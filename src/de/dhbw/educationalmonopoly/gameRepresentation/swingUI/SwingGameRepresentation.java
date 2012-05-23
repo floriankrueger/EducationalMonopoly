@@ -11,7 +11,7 @@ import java.awt.Container;
 import java.awt.Dimension;
 import javax.swing.JFrame;
 
-import de.dhbw.educationalmonopoly.gameRepresentation.IGameRepresentation;
+import de.dhbw.educationalmonopoly.gameRepresentation.AbstractGameRepresentation;
 import de.dhbw.educationalmonopoly.gameRepresentation.PlayerActionDelegate;
 import de.dhbw.educationalmonopoly.model.DiceRoll;
 import de.dhbw.educationalmonopoly.model.Game;
@@ -22,9 +22,8 @@ import de.dhbw.educationalmonopoly.model.Token;
  * @author benjamin
  *
  */
-public class SwingGameRepresentation implements IGameRepresentation {
+public class SwingGameRepresentation extends AbstractGameRepresentation {
 
-	private Game game;
 	private JFrame mainWindow;
 	private GameBoardPanel gameBoardPanel;
 	private PlayerActionPanel playerActionPanel;
@@ -116,6 +115,8 @@ public class SwingGameRepresentation implements IGameRepresentation {
 
 	private void animateFieldTransition(Token token, int fieldIndex) {
 		System.out.println("Animation moving Tokens began.");
+	
+		int initialFieldIndex = token.getFieldIndex();
 		
 		while (token.getFieldIndex() != fieldIndex) {
 			// we need to keep on moving forward
@@ -135,6 +136,9 @@ public class SwingGameRepresentation implements IGameRepresentation {
 			token.setFieldIndex(newFieldIndex);
 			this.gameBoardPanel.repaint();
 		}
+		
+		// reset token position in data model
+		token.setFieldIndex(initialFieldIndex);
 		
 		// inform, that movement is complete
 		this.tokenMovementCompleted();

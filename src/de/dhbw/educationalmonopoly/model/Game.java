@@ -40,6 +40,7 @@ public class Game implements IPlayerActionListener {
 	private Player winner;
 	private Dice dice;
 	private DiceRoll lastDiceRoll;
+	private int lastTargetFieldIndex;
 	
 	// CURRENT TURN DATA
 	
@@ -156,30 +157,32 @@ public class Game implements IPlayerActionListener {
 		// store diceRoll
 		this.lastDiceRoll = diceRoll;
 		
-		// TODO : notify game representation
 		this.gameRepresenation.displayDiceRoll(diceRoll);
 		
 		// count the dice rolls in current turn
 		this.currentDiceRollCount++;
 		
-		// TODO : move to new field (animated ?)
-		int newFieldIndex = this.playerOnTurn.getToken().getFieldIndex() + diceRoll.value();
+		int fieldIndex = this.playerOnTurn.getToken().getFieldIndex() + diceRoll.value();
 		int gameBoardSize = this.gameBoard.getFields().size();
 		
 		// player moved over start
-		while (gameBoardSize <= newFieldIndex) {
+		while (gameBoardSize <= fieldIndex) {
 			// pay salary
 			this.playerDidCompleteRound();
-			newFieldIndex -= gameBoardSize;
+			fieldIndex -= gameBoardSize;
 		}
 		
+		this.lastTargetFieldIndex = fieldIndex;
+		
 		// when animation completes, tokenMovementCompleted() is called
-		this.gameRepresenation.moveTokenToFieldIndexAnimated(this.playerOnTurn.getToken(), newFieldIndex, true);
+		this.gameRepresenation.moveTokenToFieldIndexAnimated(this.playerOnTurn.getToken(), this.lastTargetFieldIndex, true);
 	}
 	
 	public void tokenMovementCompleted() {
-		int currentFieldIndex = this.playerOnTurn.getToken().getFieldIndex();
-		Field currentField = this.gameBoard.getFields().get(currentFieldIndex);
+		// set token to final position
+		this.playerOnTurn.getToken().setFieldIndex(this.lastTargetFieldIndex);
+		
+		Field currentField = this.gameBoard.getFields().get(this.lastTargetFieldIndex);
 		this.fieldInteraction(currentField);
 		
 		// re-roll the dice if last roll was doubles
