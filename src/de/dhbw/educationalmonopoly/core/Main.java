@@ -35,7 +35,7 @@ public class Main {
 		System.out.println("Starting LE-Edition");
 		game = GameFactory.createGameWithType(MonopolyType.CLASSIC);
 		
-		// create swing ui representation
+		// create ui representation
 		IGameRepresentation gameRepresentation = new ConsoleGameRepresentation();
 		game.setGameRepresenation(gameRepresentation);
 		
