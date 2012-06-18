@@ -60,6 +60,14 @@ public class LocalPlayerActionImplementor implements IPlayerActionImplementor {
 	}
 
 	@Override
+	public void playerDidEndTurn() {
+		for (int i=0; i < this.observers.size(); i++) {
+			IPlayerActionListener listener = this.observers.get(i);
+			listener.playerDidEndTurn(this.player);
+		}
+	}
+	
+	@Override
 	public void addPlayerActionListener(IPlayerActionListener listener) {
 		this.observers.add(listener);
 	}

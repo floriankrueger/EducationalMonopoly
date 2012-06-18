@@ -76,8 +76,9 @@ public class GameBoardPanel extends JPanel {
 	      int rowLength = fields / 4;
 
 	      // setup initial positions
-	      int fieldWidth = 60;
-	      int fieldHeight = 80;
+	      int smallerDimension = Math.min(w, h);
+	      int fieldWidth = (int)(smallerDimension / (rowLength + 1.5));//60;
+	      int fieldHeight = (int)(fieldWidth * 1.25);//80;
 	      
 	      int currentX = w - fieldHeight - 0;
 	      int currentY = h - fieldHeight - 0;
