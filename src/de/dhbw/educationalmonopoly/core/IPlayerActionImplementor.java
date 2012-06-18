@@ -8,6 +8,7 @@ package de.dhbw.educationalmonopoly.core;
 
 import de.dhbw.educationalmonopoly.model.DiceRoll;
 import de.dhbw.educationalmonopoly.model.Player;
+import de.dhbw.educationalmonopoly.model.field.Field;
 
 public interface IPlayerActionImplementor {
 
@@ -20,9 +21,11 @@ public interface IPlayerActionImplementor {
 	
 	// ACTION REQUEST METHODS
 	public void rollDice();
+	public void performFieldInteraction(Field field);
 	
 	// DELEGATE CALLBACKS
 	public void playerDidRollDice(DiceRoll diceRoll);
+	public void playerDidPerformFieldInteraction();
 	
 	// OBSERVER
 	public void addPlayerActionListener(IPlayerActionListener listener);

@@ -12,6 +12,7 @@ import java.util.List;
 import de.dhbw.educationalmonopoly.model.DiceRoll;
 import de.dhbw.educationalmonopoly.model.Game;
 import de.dhbw.educationalmonopoly.model.Player;
+import de.dhbw.educationalmonopoly.model.field.Field;
 
 public class LocalPlayerActionImplementor implements IPlayerActionImplementor {
 	
@@ -35,6 +36,19 @@ public class LocalPlayerActionImplementor implements IPlayerActionImplementor {
 	@Override
 	public void rollDice() {
 		this.game.getGameRepresenation().getPlayerActionDelegate().playerShouldRollDice();
+	}
+	
+	@Override
+	public void performFieldInteraction(Field field) {
+		this.game.getGameRepresenation().getPlayerActionDelegate().playerShouldPerformFieldInteraction(field);
+	}
+	
+	@Override
+	public void playerDidPerformFieldInteraction() {
+		for (int i=0; i < this.observers.size(); i++) {
+			IPlayerActionListener listener = this.observers.get(i);
+			listener.playerDidCompleteFieldInteraction();
+		}
 	}
 	
 	@Override

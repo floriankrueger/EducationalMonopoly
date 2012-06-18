@@ -25,6 +25,7 @@ import de.dhbw.educationalmonopoly.gameRepresentation.PlayerActionDelegate;
 import de.dhbw.educationalmonopoly.model.DiceRoll;
 import de.dhbw.educationalmonopoly.model.Game;
 import de.dhbw.educationalmonopoly.model.Player;
+import de.dhbw.educationalmonopoly.model.field.Field;
 
 public class PlayerActionPanel extends JPanel implements ActionListener, PlayerActionDelegate {
 
@@ -39,6 +40,7 @@ public class PlayerActionPanel extends JPanel implements ActionListener, PlayerA
 	// UI Components
 	private JLabel headerLabel;
 	private JButton diceButton;
+	private JButton endTurnButton;
 	private JPanel currentPlayerContainer;
 	private JLabel currentPlayerHeader;
 	private JLabel currentPlayerLabel;
@@ -67,7 +69,10 @@ public class PlayerActionPanel extends JPanel implements ActionListener, PlayerA
 		this.add(this.matchInfoContainer);
 		
 		this.add(Box.createVerticalGlue());
+		
 		this.add(this.diceButton);
+		this.add(Box.createRigidArea(new Dimension(0,10)));
+		this.add(this.endTurnButton);
 	}
 	
 	private void createUIComponents() {
@@ -114,6 +119,14 @@ public class PlayerActionPanel extends JPanel implements ActionListener, PlayerA
 		this.diceButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 		this.diceButton.setEnabled(false);
 		this.diceButton.addActionListener(this);
+		
+		// end turn button
+		this.endTurnButton = new JButton();
+		this.endTurnButton.setText("End Turn");
+		this.endTurnButton.setBounds(0, 0, 100, 50);
+		this.endTurnButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+		this.endTurnButton.setEnabled(false);
+		this.endTurnButton.addActionListener(this);
 	}
 
 	public Game getGame() {
@@ -138,6 +151,16 @@ public class PlayerActionPanel extends JPanel implements ActionListener, PlayerA
 		this.diceButton.setEnabled(true);
 	}
 	
+	@Override
+	public void playerShouldPerformFieldInteraction(Field field) {
+		
+		// TODO : find all actions that the player may perform and display them via game representation
+		
+		// TODO : wait for the player to complete the actions (multiple?)
+		
+		// TODO : when finished, call 'playerDidCompleteFieldInteraction'	
+	}
+	
 	public void playerDidRollDice() {
 		// hide the dice button, force this to happen directly
 		// by dispatching it to the swing thread
@@ -151,6 +174,13 @@ public class PlayerActionPanel extends JPanel implements ActionListener, PlayerA
 				
 		if (null != this.currentPlayer) {
 			this.currentPlayer.getActionImplementor().playerDidRollDice(diceRoll);
+		}
+	}
+	
+	public void playerDidCompleteFieldInteraction() {
+		// invoke the callback to inform the game about the event
+		if (null != this.currentPlayer){
+			this.currentPlayer.getActionImplementor().playerDidPerformFieldInteraction();
 		}
 	}
 	

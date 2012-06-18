@@ -183,7 +183,7 @@ public class Game implements IPlayerActionListener {
 		this.playerOnTurn.getToken().setFieldIndex(this.lastTargetFieldIndex);
 		
 		Field currentField = this.gameBoard.getFields().get(this.lastTargetFieldIndex);
-		this.fieldInteraction(currentField);
+		this.waitForFieldInteraction(currentField);
 		
 		// re-roll the dice if last roll was doubles
 		if ((this.currentDiceRollCount < 3) && (this.lastDiceRoll.isDoubles())) {
@@ -193,7 +193,15 @@ public class Game implements IPlayerActionListener {
 		}
 	}
 	
-	private void fieldInteraction(Field field) {
+	private void waitForFieldInteraction(Field field) {
+		
+		// TODO : notify game representation
+		System.out.println("waiting for '" + this.playerOnTurn.getName() + "' to take actions");
+		
+		this.playerOnTurn.getActionImplementor().performFieldInteraction(field);
+		
+		// FIXME remove this example code
+		/*
 		if (field instanceof IBuyable) {
 			// cast the field
 			IBuyable myField = (IBuyable) field;
@@ -205,6 +213,11 @@ public class Game implements IPlayerActionListener {
 				System.out.println(this.playerOnTurn.getName()+" purchased "+field.getName());
 			}
 		}
+		*/
+	}
+	
+	public void playerDidCompleteFieldInteraction() {
+		
 	}
 	
 	private void endTurn() {

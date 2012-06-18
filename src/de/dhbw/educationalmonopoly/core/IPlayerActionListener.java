@@ -11,6 +11,17 @@ import de.dhbw.educationalmonopoly.model.Player;
 
 public interface IPlayerActionListener {
 
+	/**
+	 * Called when a Player performed a dice roll
+	 * 
+	 * @param player the Player who performed the dice roll
+	 * @param diceRoll the DiceRoll which was the result of this action
+	 */
 	public void playerDidRollDice(Player player, DiceRoll diceRoll);
+	
+	/**
+	 * Called when the Player has finished his interaction with a field
+	 */
+	public void playerDidCompleteFieldInteraction();
 	
 }
