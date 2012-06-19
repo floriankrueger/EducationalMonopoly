@@ -165,13 +165,6 @@ public class PlayerActionPanel extends JPanel implements ActionListener, PlayerA
 		
 		this.shouldPerformFieldInteraction = true;
 		
-		// FIXME : remove this before publishing
-		
-		// show 'end turn' button (if player does not have to throw the dice)
-		if (!this.shouldRollDice) {
-			this.endTurnButton.setEnabled(true);
-		}
-		
 		// TODO : find all actions that the player may perform and display them via game representation
 		
 		// TODO : wait for the player to complete the actions (multiple?)

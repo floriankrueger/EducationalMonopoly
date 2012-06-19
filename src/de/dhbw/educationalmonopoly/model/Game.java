@@ -185,21 +185,6 @@ public class Game implements IPlayerActionListener {
 		System.out.println("waiting for '" + this.playerOnTurn.getName() + "' to take actions");
 		
 		this.playerOnTurn.getActionImplementor().performFieldInteraction(field);
-		
-		// FIXME remove this example code
-		/*
-		if (field instanceof IBuyable) {
-			// cast the field
-			IBuyable myField = (IBuyable) field;
-			if (myField.hasOwner()) {
-				//TODO: charge fee if houses or hotels exist
-			} else {
-				//TODO: offer player to buy street
-				myField.buy(this.playerOnTurn);
-				System.out.println(this.playerOnTurn.getName()+" purchased "+field.getName());
-			}
-		}
-		*/
 	}
 	
 	private void endTurn() {
