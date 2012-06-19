@@ -26,6 +26,7 @@ public interface IPlayerActionImplementor {
 	// DELEGATE CALLBACKS
 	public void playerDidRollDice(DiceRoll diceRoll);
 	public void playerDidPerformFieldInteraction();
+	public void playerDidEndTurn();
 	
 	// OBSERVER
 	public void addPlayerActionListener(IPlayerActionListener listener);

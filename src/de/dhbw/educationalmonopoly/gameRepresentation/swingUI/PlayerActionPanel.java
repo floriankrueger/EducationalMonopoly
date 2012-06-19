@@ -50,6 +50,10 @@ public class PlayerActionPanel extends JPanel implements ActionListener, PlayerA
 	private JPanel matchInfoContainer;
 	private JLabel matchInfoLabel;
 	
+	// Turn State
+	private boolean shouldRollDice;
+	private boolean shouldPerformFieldInteraction;
+	
 	// PlayerActionDelegate
 	private Player currentPlayer;
 	
@@ -73,6 +77,10 @@ public class PlayerActionPanel extends JPanel implements ActionListener, PlayerA
 		this.add(this.diceButton);
 		this.add(Box.createRigidArea(new Dimension(0,10)));
 		this.add(this.endTurnButton);
+		
+		// init internal state
+		this.shouldRollDice = false;
+		this.shouldPerformFieldInteraction = false;
 	}
 	
 	private void createUIComponents() {
@@ -149,10 +157,20 @@ public class PlayerActionPanel extends JPanel implements ActionListener, PlayerA
 	public void playerShouldRollDice() {
 		// show 'roll dice' button
 		this.diceButton.setEnabled(true);
+		this.shouldRollDice = true;
 	}
 	
 	@Override
 	public void playerShouldPerformFieldInteraction(Field field) {
+		
+		this.shouldPerformFieldInteraction = true;
+		
+		// FIXME : remove this before publishing
+		
+		// show 'end turn' button (if player does not have to throw the dice)
+		if (!this.shouldRollDice) {
+			this.endTurnButton.setEnabled(true);
+		}
 		
 		// TODO : find all actions that the player may perform and display them via game representation
 		
@@ -162,10 +180,10 @@ public class PlayerActionPanel extends JPanel implements ActionListener, PlayerA
 	}
 	
 	public void playerDidRollDice() {
-		// hide the dice button, force this to happen directly
+		// disable the dice button, force this to happen directly
 		// by dispatching it to the swing thread
 		Runnable swingRunnable = new Runnable() {
-		    public void run() { diceButton.setEnabled(false); }
+		    public void run() { diceButton.setEnabled(false); shouldRollDice = false; }
 		};
 		SwingUtilities.invokeLater(swingRunnable);
 		
@@ -178,6 +196,14 @@ public class PlayerActionPanel extends JPanel implements ActionListener, PlayerA
 	}
 	
 	public void playerDidCompleteFieldInteraction() {
+		
+		// disable the end turn button, force this to happen directly
+		// by dispatching it to the swing thread
+		Runnable swingRunnable = new Runnable() {
+		    public void run() { endTurnButton.setEnabled(false); shouldPerformFieldInteraction = false; }
+		};
+		SwingUtilities.invokeLater(swingRunnable);
+		
 		// invoke the callback to inform the game about the event
 		if (null != this.currentPlayer){
 			this.currentPlayer.getActionImplementor().playerDidPerformFieldInteraction();
@@ -187,13 +213,26 @@ public class PlayerActionPanel extends JPanel implements ActionListener, PlayerA
 	// ACTION LISTENER
 	
 	public void actionPerformed(ActionEvent e) {
-        if (this.diceButton == e.getSource()) {
+		
+		Object source = e.getSource();
+		
+		// dice button
+        if (this.diceButton == source) {
         	        	
         	Runnable doWorkRunnable = new Runnable() {
     		    public void run() { playerDidRollDice(); }
     		};
     		
-    		//SwingUtilities.invokeLater(doWorkRunnable);
+    		new Thread(doWorkRunnable).start();
+        } 
+        
+        // end turn button
+        else if (this.endTurnButton == source) {
+        	
+        	Runnable doWorkRunnable = new Runnable() {
+    		    public void run() { currentPlayer.getActionImplementor().playerDidEndTurn(); playerDidCompleteFieldInteraction(); }
+    		};
+    		
     		new Thread(doWorkRunnable).start();
         }
     }

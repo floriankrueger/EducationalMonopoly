@@ -153,43 +153,29 @@ public class Game implements IPlayerActionListener {
 		this.playerOnTurn.getActionImplementor().rollDice();
 	}
 	
-	public void playerDidRollDice(Player player, DiceRoll diceRoll) {
-		// store diceRoll
-		this.lastDiceRoll = diceRoll;
-		
-		this.gameRepresenation.displayDiceRoll(diceRoll);
-		
-		// count the dice rolls in current turn
-		this.currentDiceRollCount++;
-		
-		int fieldIndex = this.playerOnTurn.getToken().getFieldIndex() + diceRoll.value();
-		int gameBoardSize = this.gameBoard.getFields().size();
-		
-		// player moved over start
-		while (gameBoardSize <= fieldIndex) {
-			// pay salary
-			this.playerDidCompleteRound();
-			fieldIndex -= gameBoardSize;
-		}
-		
-		this.lastTargetFieldIndex = fieldIndex;
-		
-		// when animation completes, tokenMovementCompleted() is called
-		this.gameRepresenation.moveTokenToFieldIndexAnimated(this.playerOnTurn.getToken(), this.lastTargetFieldIndex, true);
-	}
-	
 	public void tokenMovementCompleted() {
+		
 		// set token to final position
 		this.playerOnTurn.getToken().setFieldIndex(this.lastTargetFieldIndex);
 		
-		Field currentField = this.gameBoard.getFields().get(this.lastTargetFieldIndex);
-		this.waitForFieldInteraction(currentField);
+		boolean userCanPerformAction = true;
 		
 		// re-roll the dice if last roll was doubles
-		if ((this.currentDiceRollCount < 3) && (this.lastDiceRoll.isDoubles())) {
-			this.waitForDiceRoll();
-		} else {
-			this.endTurn();
+		if (this.lastDiceRoll.isDoubles()) {
+			
+			if (this.currentDiceRollCount < 3) {
+				this.waitForDiceRoll();
+			} else {
+				this.endTurn();
+				userCanPerformAction = false;
+			}
+			
+		}
+		
+		// wait for user interaction if turn hasn't ended
+		if (userCanPerformAction) {
+			Field currentField = this.gameBoard.getFields().get(this.lastTargetFieldIndex);
+			this.waitForFieldInteraction(currentField);
 		}
 	}
 	
@@ -216,10 +202,6 @@ public class Game implements IPlayerActionListener {
 		*/
 	}
 	
-	public void playerDidCompleteFieldInteraction() {
-		
-	}
-	
 	private void endTurn() {
 		// TODO : notify game representation
 		System.out.println("turn will end");
@@ -240,6 +222,42 @@ public class Game implements IPlayerActionListener {
 		} else {
 			this.end();
 		}
+	}
+	
+	// -- Player Interactions
+	
+	public void playerDidRollDice(Player player, DiceRoll diceRoll) {
+		// store diceRoll
+		this.lastDiceRoll = diceRoll;
+		
+		this.gameRepresenation.displayDiceRoll(diceRoll);
+		
+		// count the dice rolls in current turn
+		this.currentDiceRollCount++;
+		
+		int fieldIndex = this.playerOnTurn.getToken().getFieldIndex() + diceRoll.value();
+		int gameBoardSize = this.gameBoard.getFields().size();
+		
+		// player moved over start
+		while (gameBoardSize <= fieldIndex) {
+			// pay salary
+			this.playerDidCompleteRound();
+			fieldIndex -= gameBoardSize;
+		}
+		
+		this.lastTargetFieldIndex = fieldIndex;
+		
+		// when animation completes, tokenMovementCompleted() is called
+		this.gameRepresenation.moveTokenToFieldIndexAnimated(this.playerOnTurn.getToken(), this.lastTargetFieldIndex, true);
+	}
+	
+	public void playerDidEndTurn(Player player) {
+		System.out.println("Player did end Turn");
+		this.endTurn();
+	}
+	
+	public void playerDidCompleteFieldInteraction() {
+		
 	}
 	
 	/**
