@@ -220,7 +220,7 @@ public class Game implements IPlayerActionListener {
 		
 	}
 	
-	private void endTurn() {
+	public void endTurn() {
 		// TODO : notify game representation
 		System.out.println("turn will end");
 		
