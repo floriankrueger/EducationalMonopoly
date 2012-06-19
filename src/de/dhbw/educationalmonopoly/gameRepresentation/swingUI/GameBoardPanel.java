@@ -23,8 +23,11 @@ import java.util.List;
 
 import javax.swing.JPanel;
 
+import de.dhbw.educationalmonopoly.model.Building;
 import de.dhbw.educationalmonopoly.model.Game;
 import de.dhbw.educationalmonopoly.model.GameBoard;
+import de.dhbw.educationalmonopoly.model.Hotel;
+import de.dhbw.educationalmonopoly.model.House;
 import de.dhbw.educationalmonopoly.model.Player;
 import de.dhbw.educationalmonopoly.model.Token;
 import de.dhbw.educationalmonopoly.model.field.Field;
@@ -166,16 +169,31 @@ public class GameBoardPanel extends JPanel {
 		
 		fillRect.height = (int) (this.stripeThickness*rect.height);
 		
-		// set transform to field's local coordinates syste
+		// set transform to field's local coordinates system
 		AffineTransform oldTransform = g2d.getTransform();
 		g2d.setTransform(field.getTransform());
 		
 		g2d.fillRect(fillRect.x, fillRect.y, fillRect.width, fillRect.height);
 		
+		// draw houses / hotel
+		int currentX = fillRect.x;
+		int currentY = fillRect.y;
+		for (Building b: ((StreetField) field).getBuildings()) {
+			if (b instanceof House) {
+				g2d.setColor(Color.green);
+			} else if (b instanceof Hotel) {
+				g2d.setColor(Color.red);
+			}
+			g2d.fillRect(currentX, currentY+1, rect.width/5, fillRect.height-2);
+			currentX += rect.width/5 + rect.width/20;
+		}
+		
 		g2d.setTransform(oldTransform);
 	}
 
 	private void drawTokens(Graphics2D g2d) {
+		g2d.setColor(Color.black);
+		
 		// stores a list of all tokens placed on a field
 		HashMap<Field, List<Token> > fieldTokenMap = new HashMap<Field, List<Token> >();
 		
@@ -206,7 +224,7 @@ public class GameBoardPanel extends JPanel {
 		     	AffineTransform oldTransform = g2d.getTransform();
 		     	g2d.setTransform(currentField.getTransform());
 		     		
-				g2d.drawOval((int) (drawRect.x+(0.5*drawRect.width)), (int) (drawRect.y+(0.5*drawRect.height)), 10, 10);
+				g2d.fillOval((int) (drawRect.x+(0.5*drawRect.width)), (int) (drawRect.y+(0.5*drawRect.height)), 10, 10);
 				
 				g2d.setTransform(oldTransform);
 			} else {
@@ -242,7 +260,7 @@ public class GameBoardPanel extends JPanel {
 					 
 			     	//TODO: let token draw itself
 
-					g2d.drawOval(newDrawRect.x, newDrawRect.y , 10, 10);
+					g2d.fillOval(newDrawRect.x, newDrawRect.y , 10, 10);
 					
 					g2d.setTransform(oldTransform);
 
