@@ -155,15 +155,28 @@ public class GameBoardPanel extends JPanel {
 		 // Render
 		 Font font = new Font("Arial", Font.PLAIN, 12);   
 		 g2d.setFont(font);
-		 g2d.drawString(field.getName(), rect.x, rect.y);
+		 //g2d.drawString(field.getName(), rect.x, rect.y);
 		 // Restore original transform
 		 g2d.setTransform(saveAT);
 	}
 
 	private void drawStreetField(final Field field, final Graphics2D g2d,
 			final Rectangle rect) {
-		g2d.setColor( ((StreetField)field).getColor() );
+		 
 		
+		AffineTransform saveAT = g2d.getTransform();
+		// Perform transformation);
+		g2d.setTransform(field.getTransform());
+		// Render
+		g2d.setColor(Color.black);
+		Font font = new Font("Arial", Font.PLAIN, 9);   
+		g2d.setFont(font);
+		g2d.drawString(field.getName(), rect.x, rect.y);
+		// Restore original transform
+		g2d.setTransform(saveAT);
+		
+		
+		g2d.setColor( ((StreetField)field).getColor() );
 		// we need to clone the rect, since we don't want to transform it
 		Rectangle fillRect = (Rectangle) rect.clone();
 		
