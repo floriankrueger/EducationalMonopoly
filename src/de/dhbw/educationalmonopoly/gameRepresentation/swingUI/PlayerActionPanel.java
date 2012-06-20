@@ -160,17 +160,22 @@ public class PlayerActionPanel extends JPanel implements ActionListener, PlayerA
 		this.shouldRollDice = true;
 	}
 	
+	
+	// FIXME: Aufgabe 2, Interaktionsmenü
+	
+	// TODO : find all actions that the player may perform and display them via game representation
+	
+	// TODO : wait for the player to complete the actions (multiple?)
+	
+	// TODO : when finished, call 'playerDidCompleteFieldInteraction'
+	
 	@Override
 	public void playerShouldPerformFieldInteraction(Field field) {
 		
 		this.shouldPerformFieldInteraction = true;
 		
-		// TODO : find all actions that the player may perform and display them via game representation
-		
-		// TODO : wait for the player to complete the actions (multiple?)
-		
-		// TODO : when finished, call 'playerDidCompleteFieldInteraction'	
 	}
+	
 	
 	public void playerDidRollDice() {
 		// disable the dice button, force this to happen directly
