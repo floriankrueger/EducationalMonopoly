@@ -43,13 +43,12 @@ public class StreetField extends CollectableField implements IBuyable {
 
 	@Override
 	public void buy(Player buyer) {
-		if (this.owner == null) {
-			buyer.subtractMoney(this.price);
-			
-			if (!buyer.isBankrupt()) {
-				this.setOwner(buyer);
-			}
-		}
+		/* Note: game logic, checking if transaction 
+		is possible needs to be done elsewhere. This
+		method simply executes the transaction.*/
+		
+		buyer.subtractMoney(this.price);
+		this.setOwner(buyer);
 	}
 
 	public void setOwner(Player owner) {
