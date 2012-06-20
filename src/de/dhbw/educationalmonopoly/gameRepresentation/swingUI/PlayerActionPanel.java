@@ -40,7 +40,6 @@ public class PlayerActionPanel extends JPanel implements ActionListener, PlayerA
 	// UI Components
 	private JLabel headerLabel;
 	private JButton diceButton;
-	private JButton endTurnButton;
 	private JPanel currentPlayerContainer;
 	private JLabel currentPlayerHeader;
 	private JLabel currentPlayerLabel;
@@ -75,8 +74,6 @@ public class PlayerActionPanel extends JPanel implements ActionListener, PlayerA
 		this.add(Box.createVerticalGlue());
 		
 		this.add(this.diceButton);
-		this.add(Box.createRigidArea(new Dimension(0,10)));
-		this.add(this.endTurnButton);
 		
 		// init internal state
 		this.shouldRollDice = false;
@@ -128,13 +125,6 @@ public class PlayerActionPanel extends JPanel implements ActionListener, PlayerA
 		this.diceButton.setEnabled(false);
 		this.diceButton.addActionListener(this);
 		
-		// end turn button
-		this.endTurnButton = new JButton();
-		this.endTurnButton.setText("End Turn");
-		this.endTurnButton.setBounds(0, 0, 100, 50);
-		this.endTurnButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-		this.endTurnButton.setEnabled(false);
-		this.endTurnButton.addActionListener(this);
 	}
 
 	public Game getGame() {
@@ -172,8 +162,7 @@ public class PlayerActionPanel extends JPanel implements ActionListener, PlayerA
 	@Override
 	public void playerShouldPerformFieldInteraction(Field field) {
 		
-		this.shouldPerformFieldInteraction = true;
-		
+		this.shouldPerformFieldInteraction = true;	
 	}
 	
 	
@@ -198,7 +187,7 @@ public class PlayerActionPanel extends JPanel implements ActionListener, PlayerA
 		// disable the end turn button, force this to happen directly
 		// by dispatching it to the swing thread
 		Runnable swingRunnable = new Runnable() {
-		    public void run() { endTurnButton.setEnabled(false); shouldPerformFieldInteraction = false; }
+		    public void run() {shouldPerformFieldInteraction = false; }
 		};
 		SwingUtilities.invokeLater(swingRunnable);
 		
@@ -224,15 +213,6 @@ public class PlayerActionPanel extends JPanel implements ActionListener, PlayerA
     		new Thread(doWorkRunnable).start();
         } 
         
-        // end turn button
-        else if (this.endTurnButton == source) {
-        	
-        	Runnable doWorkRunnable = new Runnable() {
-    		    public void run() { currentPlayer.getActionImplementor().playerDidEndTurn(); playerDidCompleteFieldInteraction(); }
-    		};
-    		
-    		new Thread(doWorkRunnable).start();
-        }
     }
 	
 	public JLabel getMatchInfoLabel() {
